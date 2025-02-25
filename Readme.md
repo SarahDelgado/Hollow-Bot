@@ -1,3 +1,3 @@
 ###Pagina principal
 
-Pendiente de crear
+Pendiente de crear la pagina web
