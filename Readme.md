@@ -1,3 +1,11 @@
-### Pagina principal
+### Proyecto Hollow-Bot
 
-Pendiente de crear la pagina web
+
+Proyecto fin de grado IADB
+
+
+Autores:
+Sarah Delgado Martín
+Alejandro Fernández Morales
+
+
