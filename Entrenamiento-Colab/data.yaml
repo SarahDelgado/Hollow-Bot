@@ -1,4 +1,4 @@
-train: content/train
-val: content/validation
+train: /content/train
+val: /content/validation
 nc: 1  # Número de clases
 names: ["character"]  # Clases del dataset
