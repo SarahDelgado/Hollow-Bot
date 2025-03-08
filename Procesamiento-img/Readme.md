@@ -8,7 +8,7 @@
 Captura imagenes de la pantalla 30s
 
 ## Etiquetado de Imagenes
-- labelImg (install labelImg, install setuptools )
+- labelme
 
 Etiquetado de Imagenes con la entidad
   
