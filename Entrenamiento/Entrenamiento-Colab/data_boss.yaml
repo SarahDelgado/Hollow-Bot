@@ -1,4 +1,4 @@
 train: /content/train
 val: /content/validation
-nc: 1  # Número de clases
-names: ["boss"]  # Clases del dataset
+nc: 4  # Número de clases
+names: ["cristal_boss","boss_ray","ray_from_above","base"]  # Clases del dataset
