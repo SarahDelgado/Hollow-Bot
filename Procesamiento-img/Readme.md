@@ -13,7 +13,7 @@ Captura imagenes de la pantalla 30s
 Etiquetado de Imagenes con la entidad
   
 ## Entrenamiento
-- install torch torchvision torchaudio
+- install torch torchvision
 - install ultralytics
 
 Entrenamiento del modelo para reconocer a la entidad

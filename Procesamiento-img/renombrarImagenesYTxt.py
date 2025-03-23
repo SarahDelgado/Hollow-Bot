@@ -3,7 +3,7 @@ import os
 # Código para renombrar imágenes y sus txt correspondientes
 
 # Directorios donde están los archivos
-directorio_png = "dataset/frames"
+directorio_png = "dataset/json"
 directorio_txt = "txt"
 
 # Función para renombrar archivos en un directorio
@@ -20,5 +20,5 @@ def renombrar_archivos(directorio, extension):
             print(f"Renombrado: {archivo} → {nuevo_nombre}")
 
 # Renombrar archivos en ambos directorios
-renombrar_archivos(directorio_png, ".png")
-renombrar_archivos(directorio_txt, ".txt")
+renombrar_archivos(directorio_png, ".json")
+# renombrar_archivos(directorio_txt, ".txt")
