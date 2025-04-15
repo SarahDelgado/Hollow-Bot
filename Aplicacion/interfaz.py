@@ -111,6 +111,7 @@ class HollowBotGUI:
         self.status_label.config(text="Inactivo", bg="#ffffff", fg="#333333")
         self.running = False
 
+    
     def iniciar_bot(self):
         """
         Inicia el bot en un hilo separado si no se está ejecutando.
@@ -119,6 +120,7 @@ class HollowBotGUI:
             self.bot_thread = threading.Thread(target=self.run_bot)
             self.bot_thread.start()
 
+    
     def detener_bot(self):
         """
         Detiene el bot si está corriendo, termina el proceso y actualiza la interfaz.
@@ -138,9 +140,13 @@ class HollowBotGUI:
                 relief="groove", bd=2
             )
 
+    
     def actualizar_amenaza(self, porcentaje):
         """
         Actualiza el label del porcentaje de amenaza con colores según nivel.
+
+        Args:
+            porcentaje (float): Porcentaje de amenaza calculado, en el rango de 0 a 100.
         """
         porcentaje = max(0, min(100, porcentaje))  # Asegura que el porcentaje esté en [0, 100]
         self.threat_label.config(text=f"Porcentaje de amenaza:\n{porcentaje}%")
@@ -153,6 +159,7 @@ class HollowBotGUI:
         else:
             self.threat_label.config(bg="#f8d7da", fg="#721c24")  # Rojo
 
+    
     def cambiar_modo(self):
         """
         Cambia entre modo claro y modo oscuro cambiando el fondo y estilos.
@@ -179,6 +186,7 @@ class HollowBotGUI:
             # Modo oscuro (fondo oscuro, elementos claros)
             self.toggle_mode_button.config(bg="#ffffff", fg="black", activebackground="#ffffff")
             self.status_label.config(bg="#ffffff", fg="#333333")
+
 
 if __name__ == "__main__":
     root = tk.Tk()
