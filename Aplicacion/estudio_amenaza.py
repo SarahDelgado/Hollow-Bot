@@ -7,13 +7,13 @@ import joblib                         # Para cargar el scaler (normalización)
 import pyautogui                      # Para capturar la pantalla del juego
 
 # Modelo YOLO entrenado para detectar al personaje
-modelo_yolo_personaje = YOLO("best_character.pt")
+modelo_yolo_personaje = YOLO("Entrenamiento/training_character_junto_modelos_grafica/content/runs/detect/train/weights/best.pt")
 # Modelo YOLO entrenado para detectar al boss y los rayos
-modelo_yolo_boss = YOLO("best_boss.pt")
+modelo_yolo_boss = YOLO("Entrenamiento/training_boos_junto_modelo_graficas/content/runs/detect/train2/weights/best.pt")
 # Modelo Keras entrenado para predecir si esquivar hacia izquierda o derecha
-modelo_keras = tf.keras.models.load_model("modelo_rayo_derecha_izquierda.h5")
+modelo_keras = tf.keras.models.load_model("Entrenamiento/Codigo_keras_detectar_rayo_izq_derch/modelo_rayo_derecha_izquierda.h5")
 # Scaler previamente guardado para normalizar vectores de entrada al modelo Keras
-scaler = joblib.load("scaler2.pkl")
+scaler = joblib.load("Entrenamiento/Codigo_keras_detectar_rayo_izq_derch/scaler2.pkl")
 
 def capturar_juego():
     """
