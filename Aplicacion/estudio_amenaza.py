@@ -16,9 +16,14 @@ modelo_keras = tf.keras.models.load_model("Entrenamiento/Codigo_keras_detectar_r
 scaler = joblib.load("Entrenamiento/Codigo_keras_detectar_rayo_izq_derch/scaler2.pkl")
 
 def capturar_juego():
-    """
+   """
     Captura una imagen de pantalla del juego en tiempo real.
-    La convierte a formato compatible con OpenCV (BGR).
+    
+    Utiliza pyautogui para realizar la captura y convierte la imagen 
+    al formato BGR compatible con OpenCV.
+
+    Returns:
+        numpy.ndarray: Imagen capturada en formato BGR (para uso con OpenCV).
     """
     screenshot = pyautogui.screenshot()
     frame = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
@@ -28,20 +33,30 @@ def calcular_amenaza_desde_imagen():
     """
     Calcula el porcentaje de amenaza actual del jefe (boss) respecto al jugador,
     usando modelos de detección y predicción.
+
+    Returns:
+        float: Porcentaje de amenaza entre 0.0 y 100.0.
     """
 
     DIST_MAX = 300  # Distancia máxima usada para normalización
 
-    def distancia_centros(caja1, caja2):
-        """
-        Calcula la distancia euclídea entre los centros de dos cajas delimitadoras.
-        Cada caja está en formato [x, y, w, h].
-        """
-        x1, y1, w1, h1 = caja1
-        x2, y2, w2, h2 = caja2
-        cx1, cy1 = x1 + w1 / 2, y1 + h1 / 2
-        cx2, cy2 = x2 + w2 / 2, y2 + h2 / 2
-        return np.linalg.norm([cx1 - cx2, cy1 - cy2])
+   def distancia_centros(caja1, caja2):
+    """
+    Calcula la distancia euclídea entre los centros de dos cajas delimitadoras.
+    
+    Args:
+        caja1 (list or tuple): Coordenadas de la primera caja en formato [x, y, w, h],
+                               donde (x, y) es la esquina superior izquierda y (w, h) el ancho y alto.
+        caja2 (list or tuple): Coordenadas de la segunda caja en el mismo formato [x, y, w, h].
+
+    Returns:
+        float: Distancia euclídea entre los centros de las dos cajas.
+    """
+    x1, y1, w1, h1 = caja1
+    x2, y2, w2, h2 = caja2
+    cx1, cy1 = x1 + w1 / 2, y1 + h1 / 2
+    cx2, cy2 = x2 + w2 / 2, y2 + h2 / 2
+    return np.linalg.norm([cx1 - cx2, cy1 - cy2])
 
     # ------------------- Proceso de detección ------------------- #
     imagen_frame = capturar_juego()  # Captura pantalla
@@ -124,4 +139,4 @@ def calcular_amenaza_desde_imagen():
         0.1 * norm_dist_boss +
         0.2 * castigo_direccion
     )
-    return round(min(1.0, amenaza) * 100, 2) # Devuelve un porcentaje entre 0 y 100
+    return round(min(1.0, amenaza) * 100, 2)
