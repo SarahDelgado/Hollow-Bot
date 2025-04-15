@@ -6,7 +6,7 @@ import os
 import csv
 from datetime import datetime
 from collections import defaultdict
-from math import dist  # Usamos la función dist para calcular la distancia entre puntos
+from math import dist
 from ultralytics import YOLO
 
 # Cargar el modelo entrenado
@@ -40,7 +40,9 @@ if not os.path.exists(csv_file):
 
 
 def get_game_window():
-    """ Obtiene la posición y dimensiones de la ventana del juego. """
+    """
+    Obtiene la posición y dimensiones de la ventana del juego.
+    """
     windows = gw.getWindowsWithTitle(game_window_title)
     if windows:
         game_window = windows[0]
@@ -54,21 +56,40 @@ def get_game_window():
 
 
 def capture_screen(monitor):
-    """ Captura la pantalla de la ventana del juego. """
+    """
+    Captura la pantalla de la ventana del juego.
+    
+    Args:
+        monitor (dict): Diccionario que define las coordenadas del área a capturar. 
+                        Debe incluir claves como 'top', 'left', 'width', y 'height'.
+
+    Returns:
+        numpy.ndarray: Imagen capturada en formato BGR (compatible con OpenCV), sin el canal alfa. 
+    """
     with mss.mss() as sct:
         img = sct.grab(monitor)
-        frame = np.array(img)[:, :, :3]  # Quitar canal alfa
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Convertir a formato OpenCV
+        frame = np.array(img)[:, :, :3]  # Quita canal alfa
+        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Convierte a formato OpenCV
         return frame
 
 
 def obtener_distancia(p1, p2):
-    """ Calcula la distancia Euclidiana entre dos puntos (centro de las cajas delimitadoras). """
-    cx1, cy1 = (p1[0] + p1[2]) / 2, (p1[1] + p1[3]) / 2  # Coordenadas del centro de la base
-    cx2, cy2 = (p2[0] + p2[2]) / 2, (p2[1] + p2[3]) / 2  # Coordenadas del centro del rayo
+    """ 
+    Calcula la distancia Euclidiana entre dos puntos (centro de las cajas delimitadoras).
+
+    Args:
+        p1 (tuple): Coordenadas de la primera caja en formato (x1, y1, x2, y2).
+        p2 (tuple): Coordenadas de la segunda caja en formato (x1, y1, x2, y2).
+
+    Returns:
+        float: Distancia Euclidiana entre los centros de las dos cajas.
+    """
+    cx1, cy1 = (p1[0] + p1[2]) / 2, (p1[1] + p1[3]) / 2  # Coordenadas del centro de la primera caja
+    cx2, cy2 = (p2[0] + p2[2]) / 2, (p2[1] + p2[3]) / 2  # Coordenadas del centro de la segunda caja
     return dist((cx1, cy1), (cx2, cy2))
 
 
+# Bucle principal
 while True:
     game_window = get_game_window()
 
