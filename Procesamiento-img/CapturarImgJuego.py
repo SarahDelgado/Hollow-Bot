@@ -7,10 +7,10 @@ import os
 
 # Carpeta para guardar capturas
 output_folder = "dataset/frames"
-os.makedirs(output_folder, exist_ok=True)  # Crear la carpeta si no existe
+os.makedirs(output_folder, exist_ok=True)  # Crea la carpeta si no existe
 
 frame_count = 0
-game_window_title = "Hollow Knight"  # Ajusta al nombre real de la ventana
+game_window_title = "Hollow Knight"
 
 # Configurar la tasa de FPS
 FPS = 30
