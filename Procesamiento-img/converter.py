@@ -2,8 +2,10 @@ import os
 import json
 import glob
 
-# Define las clases manualmente o carga desde un archivo
-class_names = ["character"]  # Reemplaza con tus clases
+# Código para convertir el formato de las etiquetas JSON al aceptado por YOLO
+
+# Clases de los modelos
+class_names = ["character"] #cristal_boss #boss_ray #ray_from_above #base
 
 # Directorios
 labelme_path = "dataset/frames"  # Carpeta donde están los JSON
@@ -21,8 +23,9 @@ for json_file in glob.glob(os.path.join(labelme_path, "*.json")):
     yolo_labels = []
     for shape in data["shapes"]:
         label = shape["label"]
+        # Ignora etiquetas desconocidas
         if label not in class_names:
-            continue  # Ignora etiquetas desconocidas
+            continue
 
         class_id = class_names.index(label)
         points = shape["points"]
@@ -41,7 +44,7 @@ for json_file in glob.glob(os.path.join(labelme_path, "*.json")):
 
         yolo_labels.append(f"{class_id} {x_center} {y_center} {width} {height}")
 
-    # Guardar en archivo .txt con mismo nombre que imagen
+    # Guardar en archivo .txt con mismo nombre de la imagen
     txt_filename = os.path.join(yolo_path, os.path.basename(json_file).replace(".json", ".txt"))
     with open(txt_filename, "w") as txt_file:
         txt_file.write("\n".join(yolo_labels))
