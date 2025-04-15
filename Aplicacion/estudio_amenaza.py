@@ -1,0 +1,97 @@
+import numpy as np
+import cv2
+from ultralytics import YOLO
+import tensorflow as tf
+import joblib
+import pyautogui
+
+# Carga de modelos
+modelo_yolo_personaje = YOLO("best_character.pt")
+modelo_yolo_boss = YOLO("best_boss.pt")
+modelo_keras = tf.keras.models.load_model("modelo_rayo_derecha_izquierda.h5")
+scaler = joblib.load("scaler2.pkl")
+
+def capturar_juego():
+    screenshot = pyautogui.screenshot()
+    frame = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
+    return frame
+
+def calcular_amenaza_desde_imagen():
+    DIST_MAX = 300
+
+    def distancia_centros(caja1, caja2):
+        x1, y1, w1, h1 = caja1
+        x2, y2, w2, h2 = caja2
+        cx1, cy1 = x1 + w1 / 2, y1 + h1 / 2
+        cx2, cy2 = x2 + w2 / 2, y2 + h2 / 2
+        return np.linalg.norm([cx1 - cx2, cy1 - cy2])
+
+    imagen_frame = capturar_juego()
+
+    resultado_pj = modelo_yolo_personaje(imagen_frame)[0]
+    personaje = None
+    for det in resultado_pj.boxes.data:
+        x1, y1, x2, y2, conf, cls = det.tolist()
+        personaje = [x1, y1, x2 - x1, y2 - y1]
+        break
+
+    if personaje is None:
+        return 0
+
+    resultado_boss = modelo_yolo_boss(imagen_frame)[0]
+
+    boss = None
+    rayos_vert = []
+    rayos_horiz = []
+
+    for det in resultado_boss.boxes.data:
+        x1, y1, x2, y2, conf, cls = det.tolist()
+        label = int(cls)
+        caja = [x1, y1, x2 - x1, y2 - y1]
+        if label == 0:
+            boss = caja
+        elif label == 1:
+            rayos_horiz.append(caja)
+        elif label == 2:
+            rayos_vert.append(caja)
+
+    if boss is None:
+        boss = [0, 0, 0, 0]
+
+    direccion_predicha = "izquierda"
+    if rayos_vert:
+        rayo = rayos_vert[0]
+        vector = np.array([
+            personaje[0], personaje[1],
+            personaje[0] + personaje[2], personaje[1] + personaje[3],
+            rayo[0], rayo[1],
+            rayo[0] + rayo[2], rayo[1] + rayo[3],
+        ]).reshape(1, -1)
+        vector_norm = scaler.transform(vector)
+        pred = modelo_keras.predict(vector_norm)[0]
+        direccion_predicha = "izquierda" if pred[0] > 0.5 else "derecha"
+
+    dist_boss = distancia_centros(personaje, boss)
+    norm_dist_boss = max(0, 1 - dist_boss / DIST_MAX)
+
+    dist_vert = min([distancia_centros(personaje, r) for r in rayos_vert], default=DIST_MAX)
+    norm_dist_vert = max(0, 1 - dist_vert / DIST_MAX)
+
+    dist_horiz = min([distancia_centros(personaje, r) for r in rayos_horiz], default=DIST_MAX)
+    norm_dist_horiz = max(0, 1 - dist_horiz / DIST_MAX)
+
+    x_pj = personaje[0]
+    castigo_direccion = 0
+    for r in rayos_vert:
+        if direccion_predicha == 'izquierda' and r[0] < x_pj:
+            castigo_direccion = 1
+        elif direccion_predicha == 'derecha' and r[0] > x_pj:
+            castigo_direccion = 1
+
+    amenaza = (
+        0.4 * norm_dist_vert +
+        0.3 * norm_dist_horiz +
+        0.1 * norm_dist_boss +
+        0.2 * castigo_direccion
+    )
+    return round(min(1.0, amenaza) * 100, 2)
