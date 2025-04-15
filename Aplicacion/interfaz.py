@@ -16,6 +16,8 @@ class HollowBotGUI:
         self.bot_thread = None
         self.bot_process = None
         self.running = False
+        self.modo_oscuro = False
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Fondo con imagen
         base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -85,6 +87,22 @@ class HollowBotGUI:
         )
         self.threat_label.place(relx=0.85, rely=0.95, anchor=tk.CENTER)
 
+        # Botón modo oscuro
+        self.toggle_mode_button = tk.Button(
+            root,
+            text="🌙 Cambiar modo",
+            font=("Helvetica", 12, "bold"),
+            bg="#ffffff",
+            fg="black",
+            activebackground="#ffffff",
+            activeforeground="white",
+            relief="raised",
+            bd=4,
+            command=self.cambiar_modo
+        )
+        self.toggle_mode_button.place(relx=0.02, rely=0.02)
+
+
     def run_bot(self):
         self.running = True
         self.status_label.config(text="Ejecutando...", bg="#d1ffd6", fg="#006400")
@@ -96,7 +114,7 @@ class HollowBotGUI:
             amenaza = estudio_amenaza.calcular_amenaza_desde_imagen()
             self.actualizar_amenaza(amenaza)
             self.root.update()
-            time.sleep(0.5)  # puedes ajustar la frecuencia de análisis aquí
+            time.sleep(0.1)
 
         # Espera que termine
         self.bot_process.wait()
@@ -136,6 +154,17 @@ class HollowBotGUI:
             self.threat_label.config(bg="#fff3cd", fg="#856404")  # Amarillo
         else:
             self.threat_label.config(bg="#f8d7da", fg="#721c24")  # Rojo
+
+    def cambiar_modo(self):
+        self.modo_oscuro = not self.modo_oscuro
+
+        nuevo_archivo = "hollowbot_claro.jpg" if self.modo_oscuro else "hollowbot_oscuro.jpg"
+        image_path = os.path.join(self.base_dir, "..", "assets", nuevo_archivo)
+        nueva_imagen = Image.open(image_path).resize((700, 700))
+        self.bg_photo = ImageTk.PhotoImage(nueva_imagen)
+        self.background_label.config(image=self.bg_photo)
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
