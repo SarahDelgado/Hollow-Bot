@@ -68,7 +68,7 @@ class HollowBotGUI:
         self.threat_label = tk.Label(
             root, text="Porcentaje de amenaza:\n0%",
             font=("Segoe UI", 12, "bold"),
-            bg="#ffffff", fg="#b22222",
+            bg="#ffffff", fg="#333333",
             padx=5, pady=5,
             relief="groove", bd=2
         )
@@ -97,14 +97,14 @@ class HollowBotGUI:
         self.status_label.config(text="Ejecutando...", bg="#d1ffd6", fg="#006400")
 
         # Lanza el proceso del bot
-        self.bot_process = subprocess.Popen([sys.executable, "locajuegonewv3.py"])
+        self.bot_process = subprocess.Popen([sys.executable, "logicajuego2.py"])
 
         # Actualiza continuamente el porcentaje de amenaza
         while self.running:
             amenaza = estudio_amenaza.calcular_amenaza_desde_imagen()
             self.actualizar_amenaza(amenaza)
             self.root.update()
-            time.sleep(0.1)
+            time.sleep(0.001)
 
         # Espera que el proceso termine y actualiza estado
         self.bot_process.wait()
@@ -131,11 +131,10 @@ class HollowBotGUI:
             self.status_label.config(text="Detenido", bg="#ffe6e6", fg="#8b0000")
 
             # Reinicia el label de amenaza visualmente
-            self.threat_label = tk.Label(
-                root,
+            self.threat_label.config(
                 text="Porcentaje de amenaza:\n0%",
                 font=("Segoe UI", 12, "bold"),
-                bg="#ffffff", fg="#b22222",
+                bg="#ffffff", fg="#333333",
                 padx=5, pady=5,
                 relief="groove", bd=2
             )
