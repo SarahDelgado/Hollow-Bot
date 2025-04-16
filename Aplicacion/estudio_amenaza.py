@@ -1,4 +1,5 @@
 # ------------------- IMPORTACIONES ------------------- #
+import os                             # Para lectura de rutas
 import numpy as np                    # Para operaciones numéricas y arrays
 import cv2                            # Para procesamiento de imágenes
 from ultralytics import YOLO          # Para detección con modelos YOLO
@@ -6,25 +7,46 @@ import tensorflow as tf               # Para cargar y usar el modelo Keras
 import joblib                         # Para cargar el scaler (normalización)
 import pyautogui                      # Para capturar la pantalla del juego
 
-# Modelo YOLO entrenado para detectar al personaje
-modelo_yolo_personaje = YOLO("Entrenamiento/training_character_junto_modelos_grafica/content/runs/detect/train/weights/best.pt")
+# Ruta del archivo actual
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Ruta modelo del boss
+ruta_model_boss = os.path.join(
+    base_dir,
+    "..", "Entrenamiento", "training_boos_junto_modelo_graficas", "content", "runs", "detect", "train2", "weights", "best.pt"
+)
 # Modelo YOLO entrenado para detectar al boss y los rayos
-modelo_yolo_boss = YOLO("Entrenamiento/training_boos_junto_modelo_graficas/content/runs/detect/train2/weights/best.pt")
+modelo_yolo_boss = YOLO(ruta_model_boss)
+
+# Ruta modelo del jugador
+ruta_model_player = os.path.join(
+    base_dir,
+    "..", "Entrenamiento", "training_character_junto_modelos_grafica", "content", "runs", "detect", "train", "weights", "best.pt"
+)
+# Modelo YOLO entrenado para detectar al personaje
+modelo_yolo_personaje = YOLO(ruta_model_player)
+
+# Ruta al modelo .h5
+ruta_modelo_rayo = os.path.join(base_dir, "..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "modelo_rayo_derecha_izquierda.h5")
 # Modelo Keras entrenado para predecir si esquivar hacia izquierda o derecha
-modelo_keras = tf.keras.models.load_model("Entrenamiento/Codigo_keras_detectar_rayo_izq_derch/modelo_rayo_derecha_izquierda.h5")
+modelo_keras = tf.keras.models.load_model(ruta_modelo_rayo)
+
+# Ruta al scaler
+ruta_scaler = os.path.join(base_dir, "..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "scaler2.pkl")
 # Scaler previamente guardado para normalizar vectores de entrada al modelo Keras
-scaler = joblib.load("Entrenamiento/Codigo_keras_detectar_rayo_izq_derch/scaler2.pkl")
+scaler = joblib.load(ruta_scaler)
+
 
 def capturar_juego():
-   """
-    Captura una imagen de pantalla del juego en tiempo real.
-    
-    Utiliza pyautogui para realizar la captura y convierte la imagen 
-    al formato BGR compatible con OpenCV.
-
-    Returns:
-        numpy.ndarray: Imagen capturada en formato BGR (para uso con OpenCV).
     """
+     Captura una imagen de pantalla del juego en tiempo real.
+
+     Utiliza pyautogui para realizar la captura y convierte la imagen
+     al formato BGR compatible con OpenCV.
+
+     Returns:
+         numpy.ndarray: Imagen capturada en formato BGR (para uso con OpenCV).
+     """
     screenshot = pyautogui.screenshot()
     frame = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
     return frame
@@ -40,23 +62,24 @@ def calcular_amenaza_desde_imagen():
 
     DIST_MAX = 300  # Distancia máxima usada para normalización
 
-   def distancia_centros(caja1, caja2):
-    """
-    Calcula la distancia euclídea entre los centros de dos cajas delimitadoras.
-    
-    Args:
-        caja1 (list or tuple): Coordenadas de la primera caja en formato [x, y, w, h],
-                               donde (x, y) es la esquina superior izquierda y (w, h) el ancho y alto.
-        caja2 (list or tuple): Coordenadas de la segunda caja en el mismo formato [x, y, w, h].
+    def distancia_centros(caja1, caja2):
+        """
+        Calcula la distancia euclídea entre los centros de dos cajas delimitadoras.
 
-    Returns:
-        float: Distancia euclídea entre los centros de las dos cajas.
-    """
-    x1, y1, w1, h1 = caja1
-    x2, y2, w2, h2 = caja2
-    cx1, cy1 = x1 + w1 / 2, y1 + h1 / 2
-    cx2, cy2 = x2 + w2 / 2, y2 + h2 / 2
-    return np.linalg.norm([cx1 - cx2, cy1 - cy2])
+        Args:
+            caja1 (list or tuple): Coordenadas de la primera caja en formato [x, y, w, h],
+                                   donde (x, y) es la esquina superior izquierda y (w, h) el ancho y alto.
+            caja2 (list or tuple): Coordenadas de la segunda caja en el mismo formato [x, y, w, h].
+
+        Returns:
+            float: Distancia euclídea entre los centros de las dos cajas.
+        """
+
+        x1, y1, w1, h1 = caja1
+        x2, y2, w2, h2 = caja2
+        cx1, cy1 = x1 + w1 / 2, y1 + h1 / 2
+        cx2, cy2 = x2 + w2 / 2, y2 + h2 / 2
+        return np.linalg.norm([cx1 - cx2, cy1 - cy2])
 
     # ------------------- Proceso de detección ------------------- #
     imagen_frame = capturar_juego()  # Captura pantalla
