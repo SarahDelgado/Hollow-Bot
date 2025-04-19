@@ -1,19 +1,9 @@
 # Dependencias
 
 ## Captura Imagenes
-- cv2 (install opencv-python)
-- pygetwindow (install pygetwindow)
-- mss (install mss)
+- cv2
+- pygetwindow
+- mss 
 
-Captura imagenes de la pantalla 30s
-
-## Etiquetado de Imagenes
-- labelme
-
-Etiquetado de Imagenes con la entidad
-  
-## Entrenamiento
-- install torch torchvision
-- install ultralytics
-
-Entrenamiento del modelo para reconocer a la entidad
+## Etiquetado de Imagenes con las entidades
+- Labelme
