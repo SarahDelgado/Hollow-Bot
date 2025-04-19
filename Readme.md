@@ -76,16 +76,16 @@ Para utilizar el bot, sigue estos pasos:
 La estructura principal del proyecto es la siguiente:
 
 Hollow-Bot/  
-├── Aplicacion/           # Scripts de la interfaz y logica principal del bot  
-├── dataset_boss/         # Imágenes de entrenamiento y validación del jefe  
-├── dataset_character/    # Imágenes de entrenamiento y validación del personaje principal  
-├── dist/                 # Ejecutable del bot  
-├── Entrenamiento/        # Colabs con los entrenamientos de los modelos y los resultados de los mismos  
-├── img/                  # Imágenes para la interfaz de usuario  
-├── Procesamiento-img/    # Scripts para el procesamiento de las imagenes de entrenamiento  
-├── LICENSE               # Licencia de este proyecto  
-├── README.md             # Este archivo  
-└── requirements.txt      # Dependencias de Python  
+├── Aplicacion/          | # Scripts de la interfaz y logica principal del bot  
+├── dataset_boss/        | # Imágenes de entrenamiento y validación del jefe  
+├── dataset_character/   | # Imágenes de entrenamiento y validación del personaje principal  
+├── dist/                | # Ejecutable del bot  
+├── Entrenamiento/       | # Colabs con los entrenamientos de los modelos y los resultados de los mismos  
+├── img/                 | # Imágenes para la interfaz de usuario  
+├── Procesamiento-img/   | # Scripts para el procesamiento de las imagenes de entrenamiento  
+├── LICENSE              | # Licencia de este proyecto  
+├── README.md            | # Este archivo  
+└── requirements.txt     | # Dependencias de Python  
 
 
 ## Resultados
