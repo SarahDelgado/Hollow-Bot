@@ -75,7 +75,7 @@ Para utilizar el bot, sigue estos pasos:
 
 La estructura principal del proyecto es la siguiente:
 
-Hollow-Bot/
+Hollow-Bot/  
 ├── Aplicacion/           # Scripts de la interfaz y logica principal del bot  
 ├── dataset_boss/         # Imágenes de entrenamiento y validación del jefe  
 ├── dataset_character/    # Imágenes de entrenamiento y validación del personaje principal  
