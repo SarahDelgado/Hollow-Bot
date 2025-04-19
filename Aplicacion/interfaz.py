@@ -25,7 +25,7 @@ class HollowBotGUI:
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
 
         # ------------------- FONDO DE PANTALLA ------------------- #
-        image_path = os.path.join(self.base_dir, "..", "assets", "hollowbot_oscuro.jpg")
+        image_path = os.path.join(self.base_dir, "..", "img", "hollowbot_oscuro.jpg")
         bg_image = Image.open(image_path).resize((700, 700))  # Redimensiona imagen
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         # Coloca la imagen como fondo
@@ -167,7 +167,7 @@ class HollowBotGUI:
 
         # Selecciona imagen según modo
         nuevo_archivo = "hollowbot_claro.jpg" if self.modo_oscuro else "hollowbot_oscuro.jpg"
-        image_path = os.path.join(self.base_dir, "..", "assets", nuevo_archivo)
+        image_path = os.path.join(self.base_dir, "..", "img", nuevo_archivo)
         nueva_imagen = Image.open(image_path).resize((700, 700))
         self.bg_photo = ImageTk.PhotoImage(nueva_imagen)
         self.background_label.config(image=self.bg_photo)
