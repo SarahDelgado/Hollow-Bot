@@ -4,7 +4,11 @@
 
 # **Proyecto de Inteligencia Artificial para Hollow Knight**
 
-![Portada](images/portada.jpg)
+
+<p align="center">
+  <img src="images/portada.jpg" alt="Portada Hollow Bot" width="400">
+</p>
+
 
 **ÍNDICE**
 
@@ -16,7 +20,7 @@
 
 [La aplicación de la IA en este proyecto](#la-aplicación-de-la-ia-en-este-proyecto)
 
-[**Metodología**](#metodología.)
+[**Metodología**](#metodología)
 
 [Adquisición y Preprocesamiento de Datos](#adquisición-y-preprocesamiento-de-datos)
 
@@ -82,7 +86,8 @@ En esencia, se busca crear un agente autónomo que pueda jugar y superar los des
 
 **Demostración de habilidades:** Este proyecto sirve como una demostración práctica de la aplicación de conceptos de IA y Big Data en un escenario del mundo real, destacando las habilidades del equipo de desarrollo en áreas como el diseño de modelos, el entrenamiento de algoritmos y la ingeniería de software.
 
-# Metodología. {#metodología.}
+<a name="metodología"></a>
+# Metodología. 
 
 Esta sección describe en detalle el enfoque técnico adoptado para el desarrollo de Hollow-Bot, abarcando la adquisición y el preprocesamiento de datos, la selección y el entrenamiento de modelos de aprendizaje automático, y el diseño del entorno e interfaz del bot.
 
@@ -128,19 +133,19 @@ Finalmente, para evaluar el desempeño global del bot en su tarea de derrotar al
 <a name="modelo-yolo-para-la-detección-del-personaje-principal"></a>
 ### Modelo YOLO para la detección del personaje principal. 
 
-Los resultados del entrenamiento del modelo YOLO para la detección del personaje principal se presentan en la [Tabla 1](#tabla-1--resultados-del-entrenamiento-del-modelo-yolo-para-la-detección-del-personaje-principa), la [Figura](#figura), la [Figura](#figura) y la [Figura](#figura).
+Los resultados del entrenamiento del modelo YOLO para la detección del personaje principal se presentan en la [Tabla 1](#tabla-1--resultados-del-entrenamiento-del-modelo-yolo-para-la-detección-del-personaje-principa), la [Figura 1](#figura-1-curva-de-precisión-recall-pr-del-modelo-yolo-para-la-detección-del-personaje-principal), la [Figura 2](#figura-2-matriz-de-confusión-del-modelo-yolo-para-la-detección-del-personaje-principal) y la [Figura 3](#figura-3-ejemplos-de-imágenes-del-conjunto-de-validación-con-las-detecciones-del-modelo-yolo-para-la-detección-del-personaje-principal).
 
-En la [Tabla 1] vemos que las métricas clave utilizadas para evaluar el rendimiento del modelo fueron la **precisión** (columna precision(B)), el **recall** (columna recall(B)), y el **mAP** (columnas mAP50(B) y mAP50-95(B)).
+En la [Tabla 1](#tabla-1--resultados-del-entrenamiento-del-modelo-yolo-para-la-detección-del-personaje-principa) vemos que las métricas clave utilizadas para evaluar el rendimiento del modelo fueron la **precisión** (columna precision(B)), el **recall** (columna recall(B)), y el **mAP** (columnas mAP50(B) y mAP50-95(B)).
 
 A lo largo del entrenamiento, se observó una tendencia general al alza tanto en la precisión como en el recall, lo que indica que el modelo fue mejorando su capacidad para detectar correctamente al personaje principal. Por ejemplo, la precisión aumentó de 0.00266 en la primera época a 1 en varias épocas donde alcanzó el máximo. De manera similar, el recall pasó de 0.7972 a 0.98601.
 
 El mAP50-95, una métrica más estricta que considera el rendimiento del modelo en un rango de umbrales de confianza, también mostró una mejora constante, alcanzando un valor de 0.79758 al final del entrenamiento. Esto sugiere que el modelo no solo mejoró en la detección del personaje, sino también en la asignación de puntuaciones de confianza precisas a sus detecciones.
 
-La **curva Precisión-Recall** ([Figura](#figura)) muestra la relación entre estas dos métricas, ilustrando el compromiso entre la reducción de falsos positivos y la detección de todos los objetos relevantes. En este caso particular, la curva demuestra un rendimiento excelente, alcanzando una precisión de 1.0 hasta un recall muy cercano a 1.0, lo que indica que el modelo mantiene una alta precisión incluso al detectar la gran mayoría de los objetos. Además, la gráfica indica una mAP@0.5 de 0.985 para todas las clases, y una precisión de 0.985 para la clase 'character', lo que demuestra aún más el sólido rendimiento del modelo.
+La **curva Precisión-Recall** ([Figura 1](#figura-1-curva-de-precisión-recall-pr-del-modelo-yolo-para-la-detección-del-personaje-principal)) muestra la relación entre estas dos métricas, ilustrando el compromiso entre la reducción de falsos positivos y la detección de todos los objetos relevantes. En este caso particular, la curva demuestra un rendimiento excelente, alcanzando una precisión de 1.0 hasta un recall muy cercano a 1.0, lo que indica que el modelo mantiene una alta precisión incluso al detectar la gran mayoría de los objetos. Además, la gráfica indica una mAP@0.5 de 0.985 para todas las clases, y una precisión de 0.985 para la clase 'character', lo que demuestra aún más el sólido rendimiento del modelo.
 
-La **matriz de confusión** ([Figura](#figura)) proporciona un desglose detallado de los errores de clasificación, revelando que el modelo clasificó correctamente 141 instancias como 'character' cuando realmente eran 'character', y solo cometió 2 errores al clasificar instancias de 'background' como 'character', sin errores en la clasificación correcta de 'background'. Esto indica un rendimiento muy alto en la clasificación de 'character' y un excelente manejo de la distinción entre 'character' y 'background'.
+La **matriz de confusión** ([Figura 2](#figura-2-matriz-de-confusión-del-modelo-yolo-para-la-detección-del-personaje-principal)) proporciona un desglose detallado de los errores de clasificación, revelando que el modelo clasificó correctamente 141 instancias como 'character' cuando realmente eran 'character', y solo cometió 2 errores al clasificar instancias de 'background' como 'character', sin errores en la clasificación correcta de 'background'. Esto indica un rendimiento muy alto en la clasificación de 'character' y un excelente manejo de la distinción entre 'character' y 'background'.
 
-La [Figura](#figura) presenta una serie de doce **imágenes del conjunto de validación**, mostrando escenas del videojuego Hollow Knight con las detecciones del modelo superpuestas. En general, se puede observar un buen rendimiento del modelo en la detección del personaje principal, indicado por los recuadros azules etiquetados como "character" con altos niveles de confianza, como 0.9 y 0.8. La mayoría de las imágenes muestran detecciones precisas del personaje en diversas poses y ubicaciones dentro de los escenarios del juego, con los recuadros azules ajustándose estrechamente al contorno del personaje y la confianza alta sugiriendo que el modelo está seguro de sus predicciones. No se observan errores de detección obvios, como falsos positivos o falsos negativos.
+La [Figura 3](#figura-3-ejemplos-de-imágenes-del-conjunto-de-validación-con-las-detecciones-del-modelo-yolo-para-la-detección-del-personaje-principal) presenta una serie de doce **imágenes del conjunto de validación**, mostrando escenas del videojuego Hollow Knight con las detecciones del modelo superpuestas. En general, se puede observar un buen rendimiento del modelo en la detección del personaje principal, indicado por los recuadros azules etiquetados como "character" con altos niveles de confianza, como 0.9 y 0.8. La mayoría de las imágenes muestran detecciones precisas del personaje en diversas poses y ubicaciones dentro de los escenarios del juego, con los recuadros azules ajustándose estrechamente al contorno del personaje y la confianza alta sugiriendo que el modelo está seguro de sus predicciones. No se observan errores de detección obvios, como falsos positivos o falsos negativos.
 
 <a name="tabla1"></a>
 ### Tabla 1 : Resultados del entrenamiento del modelo YOLO para la detección del personaje principa 
@@ -200,27 +205,31 @@ La [Figura](#figura) presenta una serie de doce **imágenes del conjunto de vali
 | 49 | 25128.2 | 0.74073 | 0.36767 | 0.8773 | 0.99204 | 0.97902 | 0.98339 | 0.79521 | 0.89244 | 0.39122 | 0.93644 | 9.92e-05 | 9.92e-05 | 9.92e-05 |
 | 50 | 25632.1 | 0.75325 | 0.36616 | 0.88502 | 0.99909 | 0.98601 | 0.98992 | 0.79758 | 0.88125 | 0.38618 | 0.93311 | 5.96e-05 | 5.96e-05 | 5.96e-05 |
 
-**Tabla 1**. Resultados del entrenamiento del modelo YOLO para la detección del personaje principal.
 
-**Figura 1**. Curva de Precisión-Recall (PR) del modelo YOLO para la detección del personaje principal.
+### **Figura 1**. Curva de Precisión-Recall (PR) del modelo YOLO para la detección del personaje principal.
 
-**Figura 2**. Matriz de confusión del modelo YOLO para la detección del personaje principal.
+![Figura 1](images/Fig1.png)
 
-### 
+### **Figura 2**. Matriz de confusión del modelo YOLO para la detección del personaje principal.
 
-**Figura 3**. Ejemplos de imágenes del conjunto de validación con las detecciones del modelo YOLO para la detección del personaje principal.
+![Figura 2](images/Fig2.png)
+
+
+### **Figura 3**. Ejemplos de imágenes del conjunto de validación con las detecciones del modelo YOLO para la detección del personaje principal.
+
+![Figura 3](images/Fig3.jpg)
 
 ### Modelo YOLO para la detección del jefe y sus ataques. {#modelo-yolo-para-la-detección-del-jefe-y-sus-ataques.}
 
-Los resultados del entrenamiento del modelo YOLO para la detección del jefe y sus ataques se presentan en la [Tabla](#tabla), la [Figura](#figura), la [Figura](#figura) y la [Figura](#figura).
+Los resultados del entrenamiento del modelo YOLO para la detección del jefe y sus ataques se presentan en la [Tabla 2](#tabla-2-resultados-del-entrenamiento-del-modelo-yolo-para-la-detección-del-jefe-y-sus-ataques), la [Figura 4](#figura-4-curva-de-precisión-recall-pr-del-modelo-yolo-para-la-detección-del-jefe-y-sus-ataques), la [Figura 5](#figura-5-matriz-de-confusión-del-modelo-yolo-para-la-detección-del-jefe-y-sus-ataques) y la [Figura 6](#figura-6-ejemplos-de-imágenes-del-conjunto-de-validación-con-las-detecciones-del-modelo-yolo-para-la-detección-del-personaje-principal).
 
-En la [Tabla](#tabla), las métricas clave utilizadas para evaluar el rendimiento del modelo fueron la **precisión** (columna precision(B)), el **recall** (columna metrics/recall(B)), y el **mAP** (columnas mAP50(B) y mAP50-95(B)). Estas métricas se enfocan específicamente en la capacidad del modelo para detectar al jefe y sus ataques dentro del juego.
+En la [Tabla 2](#tabla-2-resultados-del-entrenamiento-del-modelo-yolo-para-la-detección-del-jefe-y-sus-ataques), las métricas clave utilizadas para evaluar el rendimiento del modelo fueron la **precisión** (columna precision(B)), el **recall** (columna metrics/recall(B)), y el **mAP** (columnas mAP50(B) y mAP50-95(B)). Estas métricas se enfocan específicamente en la capacidad del modelo para detectar al jefe y sus ataques dentro del juego.
 
 A lo largo del entrenamiento, se observó una tendencia general al alza tanto en la precisión como en el recall, lo que indica que el modelo fue mejorando su capacidad para detectar correctamente al jefe y sus ataques. Por ejemplo, la precisión aumentó de 0.85177 en la primera época a 0.96707 en la trigésima época, lo que sugiere que el modelo se volvió más exacto en sus detecciones a medida que avanzaba el entrenamiento. De manera similar, el recall pasó de 0.37382 a 0.83345 en la época 30, lo que indica que el modelo también mejoró en la detección de una mayor proporción de las instancias reales del jefe y sus ataques presentes en las imágenes.
 
 El mAP50-95, una métrica más estricta que considera el rendimiento del modelo en un rango de umbrales de confianza, también mostró una mejora constante, alcanzando un valor de 0.71059 en la época 30\. Esto sugiere que el modelo no solo mejoró en la detección del jefe y sus ataques, sino también en la asignación de puntuaciones de confianza más precisas a sus detecciones, lo cual es crucial para que el bot pueda tomar decisiones confiables basadas en estas detecciones.
 
-La [Figura](#figura) muestra la **curva Precisión-Recall (PR)** para el modelo YOLO, que representa el rendimiento del modelo en la detección del jefe y sus ataques. La curva ilustra la relación entre la precisión (la proporción de detecciones correctas entre todas las detecciones realizadas) y el recall (la proporción de todos los jefes y ataques reales que fueron detectados correctamente).
+La [Figura 4](#figura-4-curva-de-precisión-recall-pr-del-modelo-yolo-para-la-detección-del-jefe-y-sus-ataques) muestra la **curva Precisión-Recall (PR)** para el modelo YOLO, que representa el rendimiento del modelo en la detección del jefe y sus ataques. La curva ilustra la relación entre la precisión (la proporción de detecciones correctas entre todas las detecciones realizadas) y el recall (la proporción de todos los jefes y ataques reales que fueron detectados correctamente).
 
 En general, la gráfica indica un buen rendimiento del modelo, con un mAP@0.5 (mean Average Precision a un IoU de 0.5) para todas las clases de 0.897. Esto sugiere que, en promedio, el modelo es capaz de detectar al jefe y sus ataques con una precisión y un recall relativamente altos.
 
@@ -229,7 +238,7 @@ Al observar las curvas individuales para cada clase, se pueden extraer las sigui
 * **'cristal\_boss' (0.995), 'boss\_ray' (0.983) y 'ray\_from\_above' (0.975):** Estas clases muestran curvas PR que se mantienen muy cerca de 1.0 en precisión durante un rango significativo de recall. Esto indica que el modelo es muy efectivo en la detección de estos elementos, con pocos falsos positivos incluso cuando se intenta detectar la mayoría de las instancias. El modelo demuestra una alta capacidad para identificar correctamente al jefe 'cristal\_boss' y para detectar sus ataques 'boss\_ray' y 'ray\_from\_above'.  
 * **'base' (0.634):** La curva para esta clase tiene un rendimiento inferior en comparación con las otras clases. La precisión disminuye más rápidamente a medida que aumenta el recall, lo que sugiere que el modelo tiene más dificultades para detectar consistentemente todas las instancias de 'base' sin cometer falsos positivos. Esto indica que 'base' es un elemento más difícil de definir o detectar.
 
-La **matriz de confusión** ([Figura](#figura)) proporciona un desglose detallado del rendimiento del modelo YOLO en la clasificación de las detecciones del jefe y sus ataques. Cada fila representa las clases predichas por el modelo, mientras que cada columna representa las clases verdaderas (ground truth). Los valores en la matriz indican el número de instancias que pertenecen a una clase verdadera y fueron clasificadas como una clase predicha.
+La **matriz de confusión** ([Figura 5](#figura-5-matriz-de-confusión-del-modelo-yolo-para-la-detección-del-jefe-y-sus-ataques)) proporciona un desglose detallado del rendimiento del modelo YOLO en la clasificación de las detecciones del jefe y sus ataques. Cada fila representa las clases predichas por el modelo, mientras que cada columna representa las clases verdaderas (ground truth). Los valores en la matriz indican el número de instancias que pertenecen a una clase verdadera y fueron clasificadas como una clase predicha.
 
 Al analizar la matriz, se pueden obtener las siguientes observaciones clave:
 
@@ -238,13 +247,15 @@ Al analizar la matriz, se pueden obtener las siguientes observaciones clave:
 * **Confusión de 'base' con 'background'**: Hay una cantidad notable de confusión entre la clase 'base' y la clase 'background'. De las 88 instancias reales de 'base', 20 se clasificaron erróneamente como 'background'. Además, 51 instancias reales de 'background' se clasificaron erróneamente como 'base'. Esto sugiere que el modelo tiene dificultades para diferenciar claramente entre estos dos elementos. Esto podría deberse a similitudes visuales o a una definición poco clara de lo que constituye 'base' frente a 'background'.  
 * **Errores mínimos con 'background**': En general, el modelo comete pocos errores al clasificar instancias de 'cristal\_boss', 'boss\_ray' y 'ray\_from\_above' como 'background', lo que indica que estos elementos son bastante distintos del fondo.
 
-La [Figura](#figura) muestra una serie de doce imágenes del conjunto de validación, presentando ejemplos visuales de las detecciones del modelo YOLO sobre fotogramas del videojuego Hollow Knight. Estas imágenes ofrecen una perspectiva cualitativa del rendimiento del modelo en la tarea de detectar al jefe y sus ataques.
+La [Figura 6](#figura-6-ejemplos-de-imágenes-del-conjunto-de-validación-con-las-detecciones-del-modelo-yolo-para-la-detección-del-personaje-principal) muestra una serie de doce imágenes del conjunto de validación, presentando ejemplos visuales de las detecciones del modelo YOLO sobre fotogramas del videojuego Hollow Knight. Estas imágenes ofrecen una perspectiva cualitativa del rendimiento del modelo en la tarea de detectar al jefe y sus ataques.
 
 En términos generales, el modelo muestra una capacidad razonable para identificar al jefe, denominado 'cristal\_boss', y algunos de sus ataques, como 'boss\_ray' y 'ray\_from\_above'. Sin embargo, se observan ciertas inconsistencias y áreas donde el modelo podría mejorar.
 
 La detección del jefe, 'cristal\_boss', es bastante consistente en la mayoría de las imágenes, con recuadros azules que generalmente se ajustan bien al contorno del personaje y niveles de confianza alrededor de 0.9. En contraste, la detección de los ataques del jefe es más variable. El ataque 'boss\_ray' se detecta en algunas imágenes, pero con puntajes de confianza a veces más bajos, como 0.3. De manera similar, la detección de 'ray\_from\_above' es menos consistente y los recuadros a veces no se alinean perfectamente con el ataque visual. Además, la etiqueta 'base' tiene unos puntajes de confianza también varían entre las detecciones, lo que indica diferentes niveles de certeza del modelo, posiblemente influenciados por la pose del jefe, la claridad de los ataques o el fondo. Finalmente, en escenas donde el jefe y los ataques están muy cerca o se superponen, las detecciones pueden ser menos precisas o mostrar una confianza más baja.
 
 Debido a los resultados obtenidos sobre la clase ‘base’ que sería la usada para determinar el sentido del ataque ‘ray\_from\_above’, se decidió entrenar un tercer modelo Keras para este fin.
+
+### **Tabla 2**. Resultados del entrenamiento del modelo YOLO para la detección del jefe y sus ataques.
 
 | epoch | time | train/box\_loss | train/cls\_loss | train/dfl\_loss | precision(B) | recall(B) | mAP50(B) | mAP50-95(B) | val/box\_loss | val/cls\_loss | val/dfl\_loss | lr/pg0 | lr/pg1 | lr/pg2 |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -299,20 +310,26 @@ Debido a los resultados obtenidos sobre la clase ‘base’ que sería la usada 
 | 49 | 34526.5 | 0.51214 | 0.35657 | 0.84096 | 0.94793 | 0.85953 | 0.89482 | 0.75794 | 0.57548 | 0.3677 | 0.84142 | 6.2e-05 | 6.2e-05 | 6.2e-05 |
 | 50 | 35231.1 | 0.48983 | 0.35007 | 0.83863 | 0.94641 | 0.86100 | 0.89568 | 0.75902 | 0.57249 | 0.36202 | 0.84107 | 0,03725 | 0,03725 | 0,03725 |
 
-**Tabla 2**. Resultados del entrenamiento del modelo YOLO para la detección del jefe y sus ataques.
 
-**Figura 4**. Curva de Precisión-Recall (PR) del modelo YOLO para la detección del jefe y sus ataques.
 
-**Figura 5**. Matriz de confusión del modelo YOLO para la detección del jefe y sus ataques.
+### **Figura 4**. Curva de Precisión-Recall (PR) del modelo YOLO para la detección del jefe y sus ataques.
 
-**Figura 6**. Ejemplos de imágenes del conjunto de validación con las detecciones del modelo YOLO para la detección del personaje principal.
+![Figura 4](images/Fig4.png)
+
+### **Figura 5**. Matriz de confusión del modelo YOLO para la detección del jefe y sus ataques.
+
+![Figura 5](images/Fig5.png)
+
+### **Figura 6**. Ejemplos de imágenes del conjunto de validación con las detecciones del modelo YOLO para la detección del personaje principal.
+
+![Figura 6](images/Fig6.jpg)
 
 <a name="modelo-keras-para-la-predicción-del-sentido-del-ataque-‘ray_from_above’"></a>
 ### Modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’. 
 
-Los resultados del entrenamiento del modelo KERAS la predicción del sentido del ataque ‘ray\_from\_above’ se presentan en la [Figura](#figura), la [Figura](#figura) y la [Figura](#figura).
+Los resultados del entrenamiento del modelo KERAS la predicción del sentido del ataque ‘ray\_from\_above’ se presentan en la [Figura 7](#figura-7-curva-de-precisión-recall-pr-del-modelo-keras-para-la-predicción-del-sentido-del-ataque-ray_from_above), la [Figura 8](#figura-8-curva-de-precisión-y-curva-de-pérdida-del-modelo-keras-para-la-predicción-del-sentido-del-ataque-ray_from_above) y la [Figura 9](#figura-9-matriz-de-confusión-del-modelo-keras-para-la-predicción-del-sentido-del-ataque-ray_from_above).
 
-La [Figura](#figura) muestra la **curva Precisión-Recall** (PR) obtenida del modelo Keras entrenado para predecir el sentido del ataque 'ray\_from\_above'. Esta curva grafica la relación entre la precisión (la proporción de predicciones correctas de la dirección del ataque entre todas las predicciones realizadas para esa dirección) y el recall (la proporción de todas las instancias reales de la dirección del ataque que fueron correctamente predichas por el modelo), variando el umbral de confianza de la predicción.
+La [Figura 7](#figura-7-curva-de-precisión-recall-pr-del-modelo-keras-para-la-predicción-del-sentido-del-ataque-ray_from_above) muestra la **curva Precisión-Recall** (PR) obtenida del modelo Keras entrenado para predecir el sentido del ataque 'ray\_from\_above'. Esta curva grafica la relación entre la precisión (la proporción de predicciones correctas de la dirección del ataque entre todas las predicciones realizadas para esa dirección) y el recall (la proporción de todas las instancias reales de la dirección del ataque que fueron correctamente predichas por el modelo), variando el umbral de confianza de la predicción.
 
 La curva de color naranja representa el rendimiento del modelo para la tarea de clasificación del sentido del ataque 'ray\_from\_above'. Se observa que la curva se mantiene en valores de precisión muy altos (cercanos a 1.0) para un rango considerable de valores de recall, lo que indica que el modelo es capaz de predecir la dirección del ataque con una alta exactitud, incluso cuando se intenta identificar una porción significativa de todas las instancias del ataque.
 
@@ -320,13 +337,13 @@ El valor del Área Bajo la Curva (AP), indicado en la leyenda como AP \= 0.97, p
 
 La forma de la curva sugiere que el modelo es robusto y confiable para esta tarea específica. La alta precisión mantenida a medida que aumenta el recall implica que el modelo comete pocos falsos positivos al predecir la dirección del ataque, incluso cuando se intenta detectar la mayoría de las instancias reales. La caída pronunciada al final de la curva, cerca de un recall de 1.0, podría indicar que para alcanzar la detección de todas las instancias del ataque, el modelo comienza a realizar más predicciones incorrectas, lo que disminuye la precisión.
 
-En la [Figura](#figura) tenemos dos gráficas. En la primera, se muestra la **Precisión** (accuracy) durante el entrenamiento, ilustrando la evolución de la precisión del modelo Keras al predecir la dirección del ataque "ray\_from\_above" a lo largo de las épocas de entrenamiento. La línea azul representa la precisión en el conjunto de entrenamiento, mientras que la línea naranja muestra la precisión en el conjunto de validación. Se observa un incremento notable en la precisión para ambos conjuntos durante las primeras épocas, alcanzando valores superiores al 0.9 rápidamente. La precisión de entrenamiento se mantiene alta y con ligeras fluctuaciones cerca de 1.0 hacia el final del proceso. La precisión de validación sigue una tendencia similar al alza, aunque con algunas variaciones más pronunciadas, estabilizándose también en valores elevados, ligeramente por debajo del máximo alcanzado en el entrenamiento. Esta alta precisión en ambos conjuntos sugiere que el modelo aprende a clasificar correctamente la dirección del ataque con buena capacidad de generalización, aunque la ligera divergencia al final podría indicar un incipiente sobreajuste.
+En la [Figura 8](#figura-8-curva-de-precisión-y-curva-de-pérdida-del-modelo-keras-para-la-predicción-del-sentido-del-ataque-ray_from_above) tenemos dos gráficas. En la primera, se muestra la **Precisión** (accuracy) durante el entrenamiento, ilustrando la evolución de la precisión del modelo Keras al predecir la dirección del ataque "ray\_from\_above" a lo largo de las épocas de entrenamiento. La línea azul representa la precisión en el conjunto de entrenamiento, mientras que la línea naranja muestra la precisión en el conjunto de validación. Se observa un incremento notable en la precisión para ambos conjuntos durante las primeras épocas, alcanzando valores superiores al 0.9 rápidamente. La precisión de entrenamiento se mantiene alta y con ligeras fluctuaciones cerca de 1.0 hacia el final del proceso. La precisión de validación sigue una tendencia similar al alza, aunque con algunas variaciones más pronunciadas, estabilizándose también en valores elevados, ligeramente por debajo del máximo alcanzado en el entrenamiento. Esta alta precisión en ambos conjuntos sugiere que el modelo aprende a clasificar correctamente la dirección del ataque con buena capacidad de generalización, aunque la ligera divergencia al final podría indicar un incipiente sobreajuste.
 
 En la segunda gráfica se muestra la Pérdida (loss) durante el entrenamiento, es decir, representa la disminución de la función de pérdida del modelo Keras a medida que avanza el entrenamiento. La línea azul indica la pérdida en el conjunto de entrenamiento, y la línea naranja la pérdida en el conjunto de validación. En ambas curvas, se aprecia una reducción significativa de la pérdida en las primeras épocas, lo que concuerda con el aumento de la precisión. La pérdida de entrenamiento continúa disminuyendo gradualmente hacia valores muy bajos, señal de que el modelo se ajusta a los datos de entrenamiento. La pérdida de validación también decrece inicialmente, indicando una buena generalización. Sin embargo, después de cierto punto, la pérdida de validación tiende a estabilizarse e incluso muestra un ligero aumento en algunas áreas, mientras que la pérdida de entrenamiento sigue descendiendo. Esta divergencia es un indicativo de posible sobreajuste, donde el modelo mejora en los datos de entrenamiento pero comienza a perder capacidad para generalizar a nuevos datos no vistos. Al final del entrenamiento, la pérdida de validación se mantiene en niveles bajos, aunque superiores a la pérdida en el conjunto de entrenamiento.
 
 En resumen, ambas gráficas indican un aprendizaje efectivo del modelo Keras para predecir la dirección del ataque "ray\_from\_above", con alta precisión y baja pérdida tanto en entrenamiento como en validación. No obstante, la ligera divergencia entre las curvas sugiere la necesidad de considerar estrategias para mitigar un posible sobreajuste hacia las últimas épocas del entrenamiento.
 
-La [Figura](#figura) presenta la **matriz de confusión** obtenida del modelo Keras entrenado para clasificar el sentido del ataque 'ray\_from\_above' en dos posibles direcciones: 'Izquierda' y 'Derecha'. Esta matriz proporciona un desglose detallado del rendimiento del modelo al mostrar el número de predicciones correctas e incorrectas para cada clase.
+La [Figura 9](#figura-9-matriz-de-confusión-del-modelo-keras-para-la-predicción-del-sentido-del-ataque-ray_from_above) presenta la **matriz de confusión** obtenida del modelo Keras entrenado para clasificar el sentido del ataque 'ray\_from\_above' en dos posibles direcciones: 'Izquierda' y 'Derecha'. Esta matriz proporciona un desglose detallado del rendimiento del modelo al mostrar el número de predicciones correctas e incorrectas para cada clase.
 
 Al analizar la matriz, se observa lo siguiente:
 
@@ -335,11 +352,17 @@ Al analizar la matriz, se observa lo siguiente:
 
 En resumen, muestra un rendimiento muy bueno en la predicción del sentido del ataque 'ray\_from\_above'. Logra una alta tasa de verdaderos positivos para ambas clases ('Izquierda' y 'Derecha'), con un número muy bajo de falsos negativos (instancias reales de 'Izquierda' clasificadas como 'Derecha') y ningún falso positivo (instancias reales de 'Derecha' clasificadas como 'Izquierda'). La ausencia de errores en la predicción de 'Derecha' y el bajo número de errores en la predicción de 'Izquierda' indican que el modelo ha aprendido a distinguir eficazmente entre ambas direcciones del ataque
 
-**Figura 7**. Curva de Precisión-Recall (PR) del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
+### **Figura 7**. Curva de Precisión-Recall (PR) del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
 
-**Figura 8**. Curva de Precisión y curva de Pérdida del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
+![Figura 7](/images/Fig7.png)
 
-**Figura 9**. Matriz de confusión del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
+### **Figura 8**. Curva de Precisión y curva de Pérdida del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
+
+![Figura 8](/images/Fig8.png)
+
+### **Figura 9**. Matriz de confusión del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
+
+![Figura 9](/images/Fig9.png)
 
 <a name="#conclusiones"></a>
 # Conclusiones
@@ -364,6 +387,8 @@ En una reflexión general, la aplicación de técnicas de IA y Big Data a Hollow
 
 **Estudio de la amenaza**
 
+#Poner cosas aqui
+
 **Entrenamientos(?)**
 
 <a name="#visualizaciones-de-datos-adicionales"></a>
@@ -372,22 +397,24 @@ En una reflexión general, la aplicación de técnicas de IA y Big Data a Hollow
 <a name="#modelo-yolo-para-la-detección-del-personaje-principal"></a>
 #### Modelo YOLO para la detección del personaje principal. 
 
-**Figura X.** Evolución de las métricas del modelo durante el entrenamiento.
+**Figura X** Evolución de las métricas del modelo durante el entrenamiento.
 
-**Figura X**. Análisis de correlación de las etiquetas de detección de objetos.
+![Figura X](images/Figx.png)
+
+**Figura X1**. Análisis de correlación de las etiquetas de detección de objetos.
+
+![Figura X](images/figx1.jpg)
 
 <a name="#modelo-yolo-para-la-detección-del-jefe-y-sus-ataques"></a>
 #### Modelo YOLO para la detección del jefe y sus ataques. 
 
-**Figura X.** Evolución de las métricas del modelo durante el entrenamiento.
+**Figura X2** Evolución de las métricas del modelo durante el entrenamiento.
 
-# 
+![Figura X](images/Figx2.png)
 
-# 
+**Figura X3**. Análisis de correlación de las etiquetas de detección de objetos.
 
-# 
-
-**Figura X**. Análisis de correlación de las etiquetas de detección de objetos.
+![Figura X](images/Figx3.jpg)
 
 <a name="#información-sobre-los-miembros-del-equipo-del-proyecto-y-sus-funciones"></a>
 ### Información sobre los miembros del equipo del proyecto y sus funciones. 
