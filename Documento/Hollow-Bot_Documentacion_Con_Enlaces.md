@@ -6,7 +6,7 @@
 
 
 <p align="center">
-  <img src="images/portada.jpg" alt="Portada Hollow Bot" width="400">
+  <img src="images/Portada.jpg" alt="Portada Hollow Bot" width="400">
 </p>
 
 
