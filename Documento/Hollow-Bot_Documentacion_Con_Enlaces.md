@@ -354,15 +354,15 @@ En resumen, muestra un rendimiento muy bueno en la predicción del sentido del a
 
 ### **Figura 7**. Curva de Precisión-Recall (PR) del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
 
-![Figura 7](/images/Fig7.png)
+![Figura 7](images/Fig7.png)
 
 ### **Figura 8**. Curva de Precisión y curva de Pérdida del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
 
-![Figura 8](/images/Fig8.png)
+![Figura 8](images/Fig8.png)
 
 ### **Figura 9**. Matriz de confusión del modelo KERAS para la predicción del sentido del ataque ‘ray\_from\_above’.
 
-![Figura 9](/images/Fig9.png)
+![Figura 9](images/Fig9.png)
 
 <a name="#conclusiones"></a>
 # Conclusiones
