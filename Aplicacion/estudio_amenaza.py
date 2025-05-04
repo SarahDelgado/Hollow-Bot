@@ -1,38 +1,32 @@
 # ------------------- IMPORTACIONES ------------------- #
-import os                             # Para lectura de rutas
-import numpy as np                    # Para operaciones numéricas y arrays
-import cv2                            # Para procesamiento de imágenes
-from ultralytics import YOLO          # Para detección con modelos YOLO
-import tensorflow as tf               # Para cargar y usar el modelo Keras
-import joblib                         # Para cargar el scaler (normalización)
-import pyautogui                      # Para capturar la pantalla del juego
+import os                               # Para lectura de rutas
+import numpy as np                      # Para operaciones numéricas y arrays
+import cv2                              # Para procesamiento de imágenes
+from ultralytics import YOLO            # Para detección con modelos YOLO
+import tensorflow as tf                 # Para cargar y usar el modelo Keras
+import joblib                           # Para cargar el scaler (normalización)
+import pyautogui                        # Para capturar la pantalla del juego
+from obtener_rutas import resource_path # Función personalizada para obtener las rutas de los archivos
 
-# Ruta del archivo actual
-base_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Ruta modelo del boss
-ruta_model_boss = os.path.join(
-    base_dir,
+# ------------------- CARGA DE MODELOS Y SCALER ------------------- #
+# Ruta modelo del jefe
+ruta_model_boss = resource_path(os.path.join(
     "..", "Entrenamiento", "training_boos_junto_modelo_graficas", "content", "runs", "detect", "train2", "weights", "best.pt"
-)
+))
 # Modelo YOLO entrenado para detectar al boss y los rayos
 modelo_yolo_boss = YOLO(ruta_model_boss)
-
-# Ruta modelo del jugador
-ruta_model_player = os.path.join(
-    base_dir,
+# Ruta modelo del personaje principal
+ruta_model_player = resource_path(os.path.join(
     "..", "Entrenamiento", "training_character_junto_modelos_grafica", "content", "runs", "detect", "train", "weights", "best.pt"
-)
-# Modelo YOLO entrenado para detectar al personaje
+))
+# Modelo YOLO entrenado para detectar al personaje principal
 modelo_yolo_personaje = YOLO(ruta_model_player)
-
-# Ruta al modelo .h5
-ruta_modelo_rayo = os.path.join(base_dir, "..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "modelo_rayo_derecha_izquierda.h5")
+# Ruta al modelo keras
+ruta_modelo_rayo = resource_path(os.path.join("..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "mejor_modelo_direccion_rayo.keras"))
 # Modelo Keras entrenado para predecir si esquivar hacia izquierda o derecha
 modelo_keras = tf.keras.models.load_model(ruta_modelo_rayo)
-
 # Ruta al scaler
-ruta_scaler = os.path.join(base_dir, "..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "scaler2.pkl")
+ruta_scaler = resource_path(os.path.join("..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "scaler_rayo.pkl"))
 # Scaler previamente guardado para normalizar vectores de entrada al modelo Keras
 scaler = joblib.load(ruta_scaler)
 
