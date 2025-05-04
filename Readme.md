@@ -21,6 +21,8 @@ Para utilizar el bot, sigue estos pasos:
 
 4.  **Activa el bot:**
     * Presiona el botón "Iniciar bot".
+    * Aseguráte de tener un micrófono conectado.
+    * Di "Inicia" por el microfóno para que comience la ejecución del boss.
 
 **Nota:**
 * El uso de bots en videojuegos puede estar en contra de los términos de servicio del juego. Úsalo bajo tu propia responsabilidad.
@@ -54,6 +56,10 @@ Para utilizar el bot, sigue estos pasos:
       
 * **Interfaz de usuario (GUI):**
     * Tkinter
+ 
+* **Captura de audio y reconocimiento de voz:**
+    * SpeechRecognition 3.14.2
+    * PyAudio 0.2.14
 
 * **Otras librerías importantes:**
     * OpenCV 4.11.0.86
@@ -77,6 +83,7 @@ La estructura principal del proyecto es la siguiente:
 
 Hollow-Bot/  
 ├── Aplicacion/          | # Scripts de la interfaz y logica principal del bot  
+├── Documento/           | # Documentación del proyecto    
 ├── dataset_boss/        | # Imágenes de entrenamiento y validación del jefe  
 ├── dataset_character/   | # Imágenes de entrenamiento y validación del personaje principal  
 ├── dist/                | # Ejecutable del bot  
@@ -106,5 +113,5 @@ Este proyecto se distribuye bajo la licencia establecida en el archivo LICENSE.
 ## Contacto
 
 Para cualquier pregunta o sugerencia, por favor contacte con:
-  * sdelmar514@ieszaidinvergeles.org
-  * afermor @ieszaidinvergeles.org.
+  * sarahdelgado36@gmail.com
+  * alejandroferndzm@gmail.com
