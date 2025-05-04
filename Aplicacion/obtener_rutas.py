@@ -11,4 +11,6 @@ def resource_path(relative_path):
     except AttributeError:
         # Estamos ejecutando el script directamente (no empaquetado)
         base_path = os.path.abspath(".")
+        # Ajuste para desarrollo
+        base_path = os.path.dirname(base_path)
     return os.path.join(base_path, relative_path)

@@ -40,7 +40,7 @@ class HollowBotGUI:
         self.juego_iniciado = False       # Flag para controlar si el juego se ha iniciado
 
         # ------------------- FONDO DE PANTALLA ------------------- #
-        image_path = resource_path(os.path.join("..", "img", "hollowbot_oscuro.jpg"))
+        image_path = resource_path(os.path.join("img", "hollowbot_oscuro.jpg"))
         bg_image = Image.open(image_path).resize((700, 700))  # Redimensiona imagen
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         # Coloca la imagen como fondo
@@ -77,7 +77,6 @@ class HollowBotGUI:
             padx=1, pady=1,
             relief="groove", bd=2
         )
-        self.voice_message_label.place(relx=0.3, rely=0.97, anchor=tk.CENTER)
 
         # ------------------- LABEL DE ESTADO ------------------- #
         self.status_label = tk.Label(
@@ -114,28 +113,6 @@ class HollowBotGUI:
         self.toggle_mode_button.place(relx=0.02, rely=0.02)
 
 
-    def iniciar_reconocimiento_voz_en_hilo(self):
-        """
-        Inicia el reconocimiento de voz en un hilo separado.
-        """
-        self.reconocimiento_thread = threading.Thread(target=reconocimiento_voz.esperar_frase_clave,
-                                                 args=(self.root, self.voice_message_label, self.iniciar_bot))
-        self.reconocimiento_thread.daemon = True
-        self.reconocimiento_thread.start()
-        return self.reconocimiento_thread # Devuelve la referencia al hilo
-
-
-    def iniciar_reconocimiento(self):
-        """
-        Inicia el hilo para el reconocimiento de voz utilizando la función del módulo separado.
-        """
-        if self.reconocimiento_thread is None or not self.reconocimiento_thread.is_alive():
-            self.reconocimiento_thread = self.iniciar_reconocimiento_voz_en_hilo()
-            self.start_button.config(state=tk.DISABLED) # Deshabilita el botón de inicio
-            self.stop_button.config(state=tk.NORMAL)   # Habilita el botón de detener
-            self.status_label.config(text="Esperando activación por voz...", bg="#ffffff", fg="#333333")
-
-
     def run_bot(self):
         """
         Ejecuta el bot en un hilo. Mientras está corriendo, actualiza el porcentaje
@@ -147,7 +124,7 @@ class HollowBotGUI:
         self.stop_button.config(state=tk.NORMAL) # Habilita el botón de detener
 
         # Lanza el proceso del bot
-        bot_script_path = resource_path("logicajuego_sin_logs.py")
+        bot_script_path = resource_path(os.path.join("Aplicacion", "logicajuego_sin_logs.py"))
         self.bot_process = subprocess.Popen([sys.executable, bot_script_path])
 
         # Actualiza continuamente el porcentaje de amenaza
@@ -176,6 +153,30 @@ class HollowBotGUI:
         if not self.running and not self.juego_iniciado:
             self.bot_thread = threading.Thread(target=self.run_bot)
             self.bot_thread.start()
+
+
+    def iniciar_reconocimiento_voz_en_hilo(self):
+        if self.reconocimiento_thread is None or not self.reconocimiento_thread.is_alive():
+            self.reconocimiento_thread = threading.Thread(target=reconocimiento_voz.esperar_frase_clave,
+                                                          args=(self.root, self.voice_message_label, self.iniciar_bot))
+            self.reconocimiento_thread.daemon = True
+            self.reconocimiento_thread.start()
+            print("Hilo de reconocimiento de voz iniciado.")
+        else:
+            print("El hilo de reconocimiento de voz ya está en ejecución.")
+
+
+    def iniciar_reconocimiento(self):
+        """
+        Inicia el hilo para el reconocimiento de voz utilizando la función del módulo separado.
+        """
+        if self.reconocimiento_thread is None or not self.reconocimiento_thread.is_alive():
+            self.reconocimiento_thread = self.iniciar_reconocimiento_voz_en_hilo()
+            self.start_button.config(state=tk.DISABLED) # Deshabilita el botón de inicio
+            self.stop_button.config(state=tk.NORMAL)   # Habilita el botón de detener
+            self.status_label.config(text="Esperando activación por voz...", bg="#ffffff", fg="#333333")
+            self.voice_message_label.place(relx=0.2, rely=0.98, anchor=tk.CENTER) # Coloca la label de reconocimiento de voz
+
 
     def detener_bot(self):
         """
@@ -210,14 +211,7 @@ class HollowBotGUI:
         )
         self.start_button.config(state=tk.NORMAL) # Vuelve a habilitar el botón de inicio
         self.stop_button.config(state=tk.DISABLED) # Deshabilita el botón de detener
-
-
-    def actualizar_mensaje_voz(self, mensaje):
-        """
-        Actualiza el texto del label de mensajes de voz.
-        """
-        self.voice_message_label.config(text=mensaje)
-        self.root.update()
+        self.voice_message_label.place_forget() # Oculta la label del reconocimiento de voz
 
 
     def actualizar_amenaza(self, porcentaje):
@@ -247,7 +241,7 @@ class HollowBotGUI:
 
         # Selecciona imagen según modo
         nuevo_archivo = "hollowbot_claro.jpg" if self.modo_oscuro else "hollowbot_oscuro.jpg"
-        image_path = resource_path(os.path.join("..", "img", nuevo_archivo))
+        image_path = resource_path(os.path.join("img", nuevo_archivo))
         nueva_imagen = Image.open(image_path).resize((700, 700))
         self.bg_photo = ImageTk.PhotoImage(nueva_imagen)
         self.background_label.config(image=self.bg_photo)

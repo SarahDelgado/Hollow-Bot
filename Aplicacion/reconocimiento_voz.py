@@ -1,10 +1,10 @@
 import speech_recognition as sr
-import tkinter as tk  # Necesario para acceder a los elementos de la GUI
-import time  # Para pausas si el micrófono no está disponible
+import tkinter as tk
+import time
 
 def esperar_frase_clave(root, voice_message_label, iniciar_bot_callback, frase_esperada="Inicia"):
     """
-    Espera a que el usuario diga la frase clave y actualiza el label de voz.
+    Espera a que el usuario diga la frase clave y actualiza el label de voz de forma segura para Tkinter.
     Maneja el caso en que el micrófono no está conectado.
 
     Args:
@@ -17,45 +17,39 @@ def esperar_frase_clave(root, voice_message_label, iniciar_bot_callback, frase_e
 
     while True:
         try:
-            with sr.Microphone() as source:  # Envuelve la creación del Microphone
+            with sr.Microphone() as source:
                 recognizer.adjust_for_ambient_noise(source)
-                voice_message_label.config(text=f"🎤 Esperando que digas: '{frase_esperada}'...")
-                root.update()
-                audio = recognizer.listen(source, timeout=5)  # Escucha por hasta 5 segundos
+
+                def actualizar_label(texto):
+                    voice_message_label.config(text=texto)
+
+                root.after(0, lambda: actualizar_label(f"🎤 Esperando que digas: '{frase_esperada}'..."))
+                audio = recognizer.listen(source, timeout=5)
                 texto = recognizer.recognize_google(audio, language='es-ES')
-                voice_message_label.config(text=f"🗣️ Dijiste: {texto}")
-                root.update()
+                root.after(0, lambda: actualizar_label(f"🗣️ Dijiste: {texto}"))
 
                 if frase_esperada.lower() in texto.lower():
-                    voice_message_label.config(text="✅ Frase reconocida. Iniciando aplicación...")
-                    root.update()
-                    root.after(100, iniciar_bot_callback)  # Llama a la función de inicio del bot
-                    break  # Salir del bucle
+                    root.after(0, lambda: actualizar_label("✅ Frase reconocida. Iniciando aplicación..."))
+                    root.after(100, iniciar_bot_callback)
+                    break
                 else:
-                    voice_message_label.config(text="❌ Esa no es la frase. Intenta de nuevo.\n")
-                    root.update()
+                    root.after(0, lambda: actualizar_label("❌ Esa no es la frase. Intenta de nuevo.\n"))
 
         except sr.UnknownValueError:
-            voice_message_label.config(text="❗ No se entendió lo que dijiste. Intenta otra vez.\n")
-            root.update()
+            root.after(0, lambda: actualizar_label("❗ No se entendió lo que dijiste. Intenta otra vez.\n"))
         except sr.RequestError as e:
-            voice_message_label.config(text=f"❗ Error con el servicio de reconocimiento: {e}")
-            root.update()
-            voice_message_label.config(text="⚠️ Error con el servicio de reconocimiento. Intenta de nuevo.")
-            root.update()
-            time.sleep(2) # Espera un poco antes de reintentar
+            root.after(0, lambda: actualizar_label(f"❗ Error con el servicio de reconocimiento: {e}"))
+            root.after(2000, lambda: actualizar_label("⚠️ Error con el servicio de reconocimiento. Intenta de nuevo."))
+            time.sleep(2)
         except OSError as e:
             if "No Default Audio Input Device Available" in str(e):
-                voice_message_label.config(text="🔇 No se detecta micrófono. Conéctalo e intenta de nuevo...")
-                root.update()
-                time.sleep(5) # Espera a que el usuario conecte el micrófono
+                root.after(0, lambda: actualizar_label("🔇 No se detecta micrófono. Conéctalo e intenta de nuevo..."))
+                time.sleep(5)
             else:
-                voice_message_label.config(text=f"🔇 No se detecta micrófono. Conéctalo e intenta de nuevo...")
-                root.update()
-                break # Sale del bucle si es otro error de audio grave
+                root.after(0, lambda: actualizar_label(f"🔇 Error de audio: {e}"))
+                break
         except sr.WaitTimeoutError:
-            pass # No se escuchó nada en el timeout, vuelve a intentar
+            pass
         except Exception as e:
-            voice_message_label.config(text=f"❗ Error inesperado: {e}")
-            root.update()
-            break # Sale del bucle por error inesperado
+            root.after(0, lambda: actualizar_label(f"❗ Error inesperado: {e}"))
+            break

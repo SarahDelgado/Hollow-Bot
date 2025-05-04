@@ -250,23 +250,21 @@ def capture_game_window(window_name):
 
 # ------------------- CARGA DE MODELOS Y SCALER ------------------- #
 # Ruta modelo del jefe
-ruta_model_boss = resource_path(os.path.join(
-    "..", "Entrenamiento", "training_boos_junto_modelo_graficas", "content", "runs", "detect", "train2", "weights", "best.pt"
+ruta_model_boss = resource_path(os.path.join("Entrenamiento", "training_boos_junto_modelo_graficas", "content", "runs", "detect", "train2", "weights", "best.pt"
 ))
 # Modelo YOLO entrenado para detectar al boss y los rayos
 model_boss = YOLO(ruta_model_boss)
 # Ruta modelo del personaje principal
-ruta_model_player = resource_path(os.path.join(
-    "..", "Entrenamiento", "training_character_junto_modelos_grafica", "content", "runs", "detect", "train", "weights", "best.pt"
+ruta_model_player = resource_path(os.path.join("Entrenamiento", "training_character_junto_modelos_grafica", "content", "runs", "detect", "train", "weights", "best.pt"
 ))
 # Modelo YOLO entrenado para detectar al personaje principal
 model_player = YOLO(ruta_model_player)
 # Ruta al modelo keras
-ruta_modelo_rayo = resource_path(os.path.join("..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "mejor_modelo_direccion_rayo.keras"))
+ruta_modelo_rayo = resource_path(os.path.join("Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "mejor_modelo_direccion_rayo.keras"))
 # Modelo Keras entrenado para predecir si esquivar hacia izquierda o derecha
 modelo_rayo = tf.keras.models.load_model(ruta_modelo_rayo)
 # Ruta al scaler
-ruta_scaler = resource_path(os.path.join("..", "Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "scaler_rayo.pkl"))
+ruta_scaler = resource_path(os.path.join("Entrenamiento", "Codigo_keras_detectar_rayo_izq_derch", "scaler_rayo.pkl"))
 # Scaler previamente guardado para normalizar vectores de entrada al modelo Keras
 scaler = joblib.load(ruta_scaler)
 
