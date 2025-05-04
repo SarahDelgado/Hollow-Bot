@@ -13,7 +13,7 @@ from obtener_rutas import resource_path # Función personalizada para obtener la
 ruta_model_boss = resource_path(os.path.join(
     "..", "Entrenamiento", "training_boos_junto_modelo_graficas", "content", "runs", "detect", "train2", "weights", "best.pt"
 ))
-# Modelo YOLO entrenado para detectar al boss y los rayos
+# Modelo YOLO entrenado para detectar al jefe y los rayos
 modelo_yolo_boss = YOLO(ruta_model_boss)
 # Ruta modelo del personaje principal
 ruta_model_player = resource_path(os.path.join(
@@ -47,7 +47,7 @@ def capturar_juego():
 
 def calcular_amenaza_desde_imagen():
     """
-    Calcula el porcentaje de amenaza actual del jefe (boss) respecto al jugador,
+    Calcula el porcentaje de amenaza actual del jefe respecto al jugador,
     usando modelos de detección y predicción.
 
     Returns:
@@ -89,7 +89,7 @@ def calcular_amenaza_desde_imagen():
     if personaje is None:
         return 0  # No hay personaje en pantalla
 
-    # ------------------- Detección del boos y rayos ------------------- #
+    # ------------------- Detección del jefe y rayos ------------------- #
     resultado_boss = modelo_yolo_boss(imagen_frame)[0]
 
     boss = None
@@ -109,7 +109,7 @@ def calcular_amenaza_desde_imagen():
             rayos_vert.append(caja)
 
     if boss is None:
-        boss = [0, 0, 0, 0]  # Si no hay boss detectado
+        boss = [0, 0, 0, 0]  # Si no hay jefe detectado
 
     # ------------------- Predicción de dirección con el modelo Keras ------------------- #
     direccion_predicha = "izquierda"
