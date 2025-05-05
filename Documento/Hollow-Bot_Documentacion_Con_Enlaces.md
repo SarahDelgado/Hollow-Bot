@@ -109,6 +109,15 @@ Cada etiqueta, junto con sus coordenadas, se guardó en un archivo JSON asociado
 
 En cuanto a la selección y el entrenamiento del modelo, se optó por la arquitectura ***YOLO*** (You Only Look Once) para la detección de objetos en los fotogramas del juego. La elección del mismo se debió a su equilibrio entre velocidad y precisión, lo que lo hace adecuado para la detección de objetos en tiempo real, un requisito esencial para que el bot reaccione eficazmente a las acciones del juego. Se entrenaron dos modelos YOLO independientes, uno dedicado a la detección del personaje principal y el otro a la detección del jefe y sus ataques. Esta decisión de utilizar modelos separados permitió una especialización y optimización para cada tipo de objeto, mejorando la precisión de la detección en comparación con un único modelo. Adicionalmente, se implementó un modelo ***Keras***, proporcionado por la librería ***TensorFlow*** de Python, para la predicción de la dirección de los ataques del jefe. Keras/TensorFlow se eligió por su amplia adopción en la comunidad de aprendizaje automático, su flexibilidad para construir y entrenar diversos tipos de modelos, y su eficiencia en el manejo de operaciones numéricas complejas, necesarias para la predicción de trayectorias. Este modelo se entrenó con los datos etiquetados para predecir la trayectoria de uno de los ataques, una capacidad crucial para permitir al bot anticiparse y reaccionar adecuadamente.
 
+<a name="reconocimiento-de-voz"></a>
+### Reconocimiento de voz.
+
+Para implementar el reconocimiento de voz en esta aplicación, se ha utilizado la librería speech_recognition de Python, la cual permite convertir audio del micrófono en texto. Esta conversión se realiza a través del servicio de reconocimiento de voz de Google, que ofrece una transcripción bastante precisa siempre y cuando se cuente con una conexión estable a Internet.
+El proceso comienza capturando el audio mediante el micrófono del dispositivo. Antes de iniciar la escucha, se emplea la función adjust_for_ambient_noise, que calibra automáticamente el micrófono para reducir el impacto del ruido ambiental, mejorando así la calidad del reconocimiento.
+Una vez que el usuario pronuncia una frase, el sistema compara el texto transcrito con una frase clave predefinida (por ejemplo, "Inicia"). Si hay coincidencia, se interpreta como una orden válida y el programa continúa su ejecución. En caso contrario, se repite el proceso hasta detectar correctamente la frase esperada.
+Una limitación de este enfoque es la dependencia de una conexión a Internet, ya que el motor de reconocimiento de Google no funciona de manera local. Esto puede representar un inconveniente en entornos sin acceso a la red o con conectividad inestable.
+
+
 <a name="entorno-e-interfaz"></a>
 ### Entorno e Interfaz.
 
