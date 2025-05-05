@@ -112,10 +112,10 @@ En cuanto a la selección y el entrenamiento del modelo, se optó por la arquite
 <a name="reconocimiento-de-voz"></a>
 ### Reconocimiento de voz.
 
-Para implementar el reconocimiento de voz en esta aplicación, se ha utilizado la librería speech_recognition de Python, la cual permite convertir audio del micrófono en texto. Esta conversión se realiza a través del servicio de reconocimiento de voz de Google, que ofrece una transcripción bastante precisa siempre y cuando se cuente con una conexión estable a Internet.<br>
-El proceso comienza capturando el audio mediante el micrófono del dispositivo. Antes de iniciar la escucha, se emplea la función adjust_for_ambient_noise, que calibra automáticamente el micrófono para reducir el impacto del ruido ambiental, mejorando así la calidad del reconocimiento.<br>
-Una vez que el usuario pronuncia una frase, el sistema compara el texto transcrito con una frase clave predefinida (por ejemplo, "Inicia"). Si hay coincidencia, se interpreta como una orden válida y el programa continúa su ejecución. En caso contrario, se repite el proceso hasta detectar correctamente la frase esperada.<br>
-Una limitación de este enfoque es la dependencia de una conexión a Internet, ya que el motor de reconocimiento de Google no funciona de manera local. Esto puede representar un inconveniente en entornos sin acceso a la red o con conectividad inestable.<br>
+Para implementar el reconocimiento de voz en esta aplicación, se ha utilizado la librería speech_recognition de Python, la cual permite convertir audio del micrófono en texto. Esta conversión se realiza a través del servicio de reconocimiento de voz de Google, que ofrece una transcripción bastante precisa siempre y cuando se cuente con una conexión estable a Internet.<br><br>
+El proceso comienza capturando el audio mediante el micrófono del dispositivo. Antes de iniciar la escucha, se emplea la función adjust_for_ambient_noise, que calibra automáticamente el micrófono para reducir el impacto del ruido ambiental, mejorando así la calidad del reconocimiento.<br><br>
+Una vez que el usuario pronuncia una frase, el sistema compara el texto transcrito con una frase clave predefinida (por ejemplo, "Inicia"). Si hay coincidencia, se interpreta como una orden válida y el programa continúa su ejecución. En caso contrario, se repite el proceso hasta detectar correctamente la frase esperada.<br><br>
+Una limitación de este enfoque es la dependencia de una conexión a Internet, ya que el motor de reconocimiento de Google no funciona de manera local. Esto puede representar un inconveniente en entornos sin acceso a la red o con conectividad inestable.<br><br>
 
 
 <a name="entorno-e-interfaz"></a>
