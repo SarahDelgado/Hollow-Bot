@@ -26,6 +26,10 @@
 
 [Selección y Entrenamiento del Modelo](#selección-y-entrenamiento-del-modelo)
 
+[Reconocimiento de voz](#reconocimiento-de-voz)
+
+[Estudio de la amenaza](#estudio-de-la-amenaza)
+
 [Entorno e Interfaz](#entorno-e-interfaz)
 
 [Métricas de Evaluación](#métricas-de-evaluación)
@@ -49,8 +53,6 @@
 [Modelo YOLO para la detección del personaje principal](#modelo-yolo-para-la-detección-del-personaje-principal)
 
 [Modelo YOLO para la detección del jefe y sus ataques](#modelo-yolo-para-la-detección-del-jefe-y-sus-ataques)
-
-[Información sobre los miembros del equipo del proyecto y sus funciones](#información-sobre-los-miembros-del-equipo-del-proyecto-y-sus-funciones)
 
 [**Repositorio**](#repositorio)
 
