@@ -405,22 +405,26 @@ En una reflexión general, la aplicación de técnicas de IA y Big Data a Hollow
 #### Lógica pricipal del bot
 
 **Figura 10** Funciones de control del personaje principal.
+
 ![Figura 10](images/Fig10.png)
 
 
 
 **Figura 11** Lógica de evasión del personaje principal.
+
 ![Figura 11](images/Fig11.png)
 
 #### Lógica del reconocimiento de voz
 
 **Figura 12** Lógica del reconocimiento de voz.
+
 ![Figura 12](images/Fig12.png)
 
 
 #### Lógica del estudio de la amenaza
 
-**Figura 13** Lógica del estudio de la amenaza que representa el jefe para el personaje principal..
+**Figura 13** Lógica del estudio de la amenaza que representa el jefe para el personaje principal.
+
 ![Figura 13](images/Fig13.png)
 
 <a name="#modelo-yolo-para-la-detección-del-personaje-principal"></a>
