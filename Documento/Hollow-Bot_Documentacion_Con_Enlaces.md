@@ -75,9 +75,8 @@ El juego destaca por su atmósfera melancólica, su estilo artístico dibujado a
 <a name="objetivo-del-proyecto"></a>
 ### Objetivo del proyecto.
 
-El objetivo principal de este proyecto es diseñar, desarrollar e implementar un bot basado en técnicas de aprendizaje automático, específicamente aprendizaje supervisado, capaz de derrotar a uno los jefes del Panteón en el videojuego Hollow Knight. Esto implica entrenar un modelo de inteligencia artificial para identificar al jefe los jefes y sus ataques y programar las acciones del personaje del jugador en consecuencia, utilizando una interfaz de activación y la librería PyAutoGUI para realizar las entradas en el juego. 
-
-En esencia, se busca crear un agente autónomo que pueda jugar y superar los desafíos que presentan los jefes del Panteón en Hollow Knight. 
+El objetivo inicial de este proyecto es ambicioso: diseñar, desarrollar e implementar un bot basado en aprendizaje automático supervisado capaz de derrotar a todos los jefes del Panteón en el videojuego Hollow Knight. Esto implica entrenar un modelo de inteligencia artificial para la identificación de múltiples jefes y sus diversos patrones de ataque, y programar las acciones del personaje del jugador de forma adaptable a cada encuentro, utilizando una interfaz de activación y la librería PyAutoGUI para la interacción con el juego. La visión es crear un agente autónomo integral capaz de superar la totalidad de los desafíos que presentan los jefes del Panteón.<br><br>
+Sin embargo, dada la considerable complejidad que supondría abordar la totalidad de los jefes del juego, con sus variados comportamientos y mecánicas de combate únicas, se tomó la decisión estratégica de focalizar el desarrollo en un único enemigo: el Cristal Boss. El objetivo principal se redefinió entonces para diseñar, desarrollar e implementar un bot específicamente adaptado para derrotar al Cristal Boss. Esto permite una mayor concentración de esfuerzos en el entrenamiento de modelos precisos para este jefe en particular y en la programación de estrategias de combate optimizadas contra sus ataques específicos. El resultado esperado es un agente autónomo altamente competente para superar el desafío que presenta el Cristal Boss en Hollow Knight.
 
 <a name="la-aplicación-de-la-ia-en-este-proyecto"></a>
 ### La aplicación de la IA en este proyecto.
@@ -117,6 +116,16 @@ El proceso comienza capturando el audio mediante el micrófono del dispositivo. 
 Una vez que el usuario pronuncia una frase, el sistema compara el texto transcrito con una frase clave predefinida (por ejemplo, "Inicia"). Si hay coincidencia, se interpreta como una orden válida y el programa continúa su ejecución. En caso contrario, se repite el proceso hasta detectar correctamente la frase esperada.<br><br>
 Una limitación de este enfoque es la dependencia de una conexión a Internet, ya que el motor de reconocimiento de Google no funciona de manera local. Esto puede representar un inconveniente en entornos sin acceso a la red o con conectividad inestable.<br><br>
 
+<a name="estudio-de-la-amenaza"></a>
+### Estudio de la amenaza.
+
+El cálculo del porcentaje de amenaza se realiza en tiempo real analizando varios factores extraídos de la imagen del juego mediante los modelos de aprendizaje automático. El proceso comienza con la detección de la posición del personaje principal y del jefe utilizando modelos YOLO independientes. También se detectan los ataques del jefe, distinguiendo entre rayos verticales y horizontales. <br><br>
+La amenaza se evalúa considerando principalmente la proximidad del jefe al personaje. Para cuantificar esto, se calcula la distancia euclídea entre los centros de las cajas delimitadoras del personaje y el jefe. Esta distancia se normaliza a un rango de 0 a 1, donde 1 indica una proximidad máxima. Cuanto menor es la distancia, mayor es la amenaza asociada a la cercanía del jefe.<br><br>
+Además de la proximidad general, se evalúa la amenaza específica de los ataques del jefe. Se calcula la distancia mínima entre el personaje y cualquier rayo vertical u horizontal detectado. Estas distancias también se normalizan a un rango de 0 a 1, de manera similar a la distancia con el jefe. La presencia cercana de un ataque incrementa significativamente el nivel de amenaza.<br><br>
+Un componente adicional en el cálculo de la amenaza, y que aprovecha el modelo Keras, es la predicción de la dirección de los rayos verticales. Una vez detectado un rayo vertical, se utiliza el modelo Keras para predecir si el personaje debería moverse a la izquierda o a la derecha para evitarlo. Se introduce un factor de "castigo" en el cálculo de la amenaza si la posición actual del personaje con respecto al rayo sugiere que se está moviendo en la dirección incorrecta predicha por el modelo Keras. Este castigo incrementa la amenaza, reflejando un mayor riesgo para el personaje.<br><br>
+Finalmente, todos estos factores individuales se combinan mediante una suma ponderada para obtener un único porcentaje de amenaza, teniendo los rayos verticales tienen una ponderación del 40%, los rayos horizontales del 30%, la distancia al jefe del 10%, y el factor de castigo de la dirección del 20%. El resultado final se escala a un porcentaje entre 0 y 100, proporcionando una indicación intuitiva del nivel de peligro que enfrenta el personaje en cada instante del juego. Este porcentaje de amenaza se muestra en la interfaz gráfica para el usuario.<br><br>
+
+
 
 <a name="entorno-e-interfaz"></a>
 ### Entorno e Interfaz.
@@ -126,17 +135,11 @@ El entorno e interfaz se desarrolló mediante una interfaz gráfica de usuario (
 <a name="métricas-de-evaluación"></a>
 ### Métricas de Evaluación.
 
-Finalmente, para evaluar el rendimiento del sistema, se emplearon diversas métricas adaptadas a las diferentes etapas del proceso. Para los modelos YOLO, encargados de la detección de objetos, se calcularon la **precisión** y el **recall**. <br>
+Finalmente, para evaluar el rendimiento del sistema, se emplearon diversas métricas adaptadas a las diferentes etapas del proceso. Para los modelos YOLO, encargados de la detección de objetos, se calcularon la <b>*precisión*</b> y el <b>*recall*</b>. La precisión se utilizó para medir la proporción de detecciones realizadas por el modelo que eran correctas, es decir, la fracción de objetos detectados que realmente corresponden al personaje principal o a los ataques del jefe. El recall, por otro lado, se empleó para medir la proporción de objetos reales presentes en las imágenes que fueron detectados correctamente por el modelo, es decir, la fracción del personaje principal, el jefe y sus ataques que el modelo logró identificar. Ambas métricas fueron cruciales para caracterizar la capacidad de los modelos YOLO para detectar correctamente los objetos de interés, minimizando tanto los falsos positivos como los falsos negativos.<br><br>
+En cuanto al modelo Keras, responsable de la predicción de la dirección de uno de los ataques del jefe, se utilizó la <b>*exactitud*</b> como métrica principal. La exactitud se definió como la proporción de predicciones de dirección realizadas por el modelo que coincidían con la dirección real del ataque. Esta métrica proporcionó una medida directa de la habilidad del modelo para predecir con precisión la trayectoria del ataque, lo cual es fundamental para la capacidad del bot de anticiparse a los movimientos del enemigo.
 
-La precisión se utilizó para medir la proporción de detecciones realizadas por el modelo que eran correctas, es decir, la fracción de objetos detectados que realmente corresponden al personaje principal o a los ataques del jefe. <br>
 
-El recall, se empleó para medir la proporción de objetos reales presentes en las imágenes que fueron detectados correctamente por el modelo, es decir, la fracción del personaje principal, el jefe y sus ataques que el modelo logró identificar. Ambas métricas fueron cruciales para caracterizar la capacidad de los modelos YOLO para detectar correctamente los objetos de interés, minimizando tanto los falsos positivos como los falsos negativos.<br>
 
-En cuanto al modelo Keras, responsable de la predicción de la dirección de uno de los ataques del jefe, se utilizó la **exactitud** como métrica principal. La exactitud se definió como la proporción de predicciones de dirección realizadas por el modelo que coincidían con la dirección real del ataque. Esta métrica proporcionó una medida directa de la habilidad del modelo para predecir con precisión la trayectoria del ataque, lo cual es fundamental para la capacidad del bot de anticiparse a los movimientos del enemigo.<br>
-
-Finalmente, para evaluar el desempeño global del bot en su tarea de derrotar al jefe, se calcularon la **tasa de éxito** y el **tiempo promedio para derrotar al jefe**. La tasa de éxito se calculó como la proporción de intentos en los que el bot logró vencer al jefe, ofreciendo una medida de la efectividad general del bot en el cumplimiento de su objetivo principal. El tiempo promedio para derrotar al jefe se utilizó como un indicador de la eficiencia del bot, permitiendo cuantificar la rapidez con la que el bot es capaz de completar la tarea.<br>
-
-**CAMBIAR ESTA SECCIÓN Y AÑADIR ALGO SOBRE EL ESTUDIO DE LA AMENAZA**
 
 <a name="resultados"></a>
 # Resultados
@@ -394,45 +397,60 @@ En una reflexión general, la aplicación de técnicas de IA y Big Data a Hollow
 <a name="#fragmentos-de-código"></a>
 ### Fragmentos de código.
 
-**Lógica del juego**
-
-**Estudio de la amenaza**
-
-#Poner cosas aqui
-
-**Entrenamientos(?)**
 
 <a name="#visualizaciones-de-datos-adicionales"></a>
 ### Visualizaciones de datos adicionales. 
 
+
+#### Lógica pricipal del bot
+
+**Figura 10** Funciones de control del personaje principal.
+![Figura 10](images/Fig10.png)
+
+
+
+**Figura 11** Lógica de evasión del personaje principal.
+![Figura 11](images/Fig11.png)
+
+#### Lógica del reconocimiento de voz
+
+**Figura 12** Lógica del reconocimiento de voz.
+![Figura 12](images/Fig12.png)
+
+
+#### Lógica del estudio de la amenaza
+
+**Figura 13** Lógica del estudio de la amenaza que representa el jefe para el personaje principal..
+![Figura 13](images/Fig13.png)
+
 <a name="#modelo-yolo-para-la-detección-del-personaje-principal"></a>
 #### Modelo YOLO para la detección del personaje principal. 
 
-**Figura X** Evolución de las métricas del modelo durante el entrenamiento.
+**Figura 14** Evolución de las métricas del modelo durante el entrenamiento.
 
-![Figura X](images/Figx.png)
+![Figura 14](images/Figx.png)
 
-**Figura X1**. Análisis de correlación de las etiquetas de detección de objetos.
+**Figura 15**. Análisis de correlación de las etiquetas de detección de objetos.
 
-![Figura X](images/figx1.jpg)
+![Figura 15](images/figx1.jpg)
 
 <a name="#modelo-yolo-para-la-detección-del-jefe-y-sus-ataques"></a>
 #### Modelo YOLO para la detección del jefe y sus ataques. 
 
-**Figura X2** Evolución de las métricas del modelo durante el entrenamiento.
+**Figura 16** Evolución de las métricas del modelo durante el entrenamiento.
 
-![Figura X](images/Figx2.png)
+![Figura 16](images/Figx2.png)
 
-**Figura X3**. Análisis de correlación de las etiquetas de detección de objetos.
+**Figura 17**. Análisis de correlación de las etiquetas de detección de objetos.
 
-![Figura X](images/Figx3.jpg)
+![Figura 17](images/Figx3.jpg)
 
 <a name="#información-sobre-los-miembros-del-equipo-del-proyecto-y-sus-funciones"></a>
 ### Información sobre los miembros del equipo del proyecto y sus funciones. 
 
-**Alejandro Fernández Morales**: Captura y procesamiento de imágenes para el entrenamiento, entrenamiento de los modelos YOLO y Keras, desarrollo de la lógica del bot implementando los modelos entrenados.
 
-**Sarah Delgado Martin**: Captura y procesamiento de imágenes para el entrenamiento,  soporte en el desarrollo del código, desarrollo de la interfaz gráfica, redacción de la documentación.
+**Sarah Delgado Martin**
+**Alejandro Fernández Morales**
 
 <a name="#repositorio"></a>
 # Repositorio
