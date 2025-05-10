@@ -449,8 +449,8 @@ En una reflexión general, la aplicación de técnicas de IA y Big Data a Hollow
 
 ![Figura 17](images/Figx3.jpg)
 
-<a name="#información-sobre-los-miembros-del-equipo-del-proyecto-y-sus-funciones"></a>
-### Información sobre los miembros del equipo del proyecto y sus funciones. 
+<a name="#miembros-del-equipo-del-proyecto"></a>
+### Miembros del equipo del proyecto. 
 
 
 **Sarah Delgado Martin**
